@@ -69,7 +69,6 @@ Copy code
 python manage.py runserver
 Open browser:
 
-cpp
 Copy code
 http://127.0.0.1:8000/
 
