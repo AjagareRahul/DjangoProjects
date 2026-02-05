@@ -24,7 +24,6 @@ DjangoProjects/
 │
 └── README.md
 
-Copy code
 
 Each folder represents an **individual Django project** created during classes or practice sessions.
 
@@ -45,31 +44,24 @@ Each folder represents an **individual Django project** created during classes o
 1. Clone the repository:
 
 git clone https://github.com/AjagareRahul/DjangoProjects.git
-Go into a specific project folder:
 
-Copy code
+2. Go into a specific project folder:
 cd DjangoProjects/project_name
-(Optional) Create and activate virtual environment:
 
-Copy code
+3. (Optional) Create and activate virtual environment:
 python -m venv venv
 source venv/Scripts/activate
-Install dependencies:
 
-
-Copy code
+4. Install dependencies:
 pip install -r requirements.txt
-Run migrations:
 
-Copy code
+5. Run migrations:
 python manage.py migrate
-Start the development server:
 
-Copy code
+6. Start the development server:
 python manage.py runserver
-Open browser:
 
-Copy code
+7. Open browser:
 http://127.0.0.1:8000/
 
 🎯 Purpose of This Repository
