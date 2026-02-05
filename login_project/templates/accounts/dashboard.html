@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard | BuildPro</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:linear-gradient(to right,#eef2ff,#f8fafc);
+}
+
+/* NAVBAR */
+.navbar{
+    background:linear-gradient(90deg,#1e293b,#334155);
+    color:#fff;
+    padding:16px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 6px 15px rgba(0,0,0,.25);
+}
+
+.nav-left{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.nav-right a{
+    color:#fff;
+    text-decoration:none;
+    margin-left:18px;
+    font-weight:600;
+    padding:8px 16px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.15);
+    transition:all 0.3s;
+}
+
+.nav-right a:hover{
+    background:#fff;
+    color:#1e293b;
+}
+
+/* CONTAINER */
+.container{
+    padding:45px;
+    max-width:1200px;
+    margin:auto;
+}
+
+/* WELCOME CARD */
+.welcome{
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 12px 30px rgba(0,0,0,.15);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.welcome h2{
+    margin:0;
+    color:#1e293b;
+}
+
+.welcome p{
+    color:#555;
+    margin-top:8px;
+}
+
+/* AVATAR */
+.avatar{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:#fff;
+    font-size:32px;
+    font-weight:bold;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:transform 0.3s;
+}
+
+.avatar:hover{
+    transform:scale(1.1);
+}
+
+/* STATS */
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:25px;
+    margin-top:35px;
+}
+
+.stat-box{
+    background:white;
+    padding:28px;
+    border-radius:18px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+    transition:transform 0.3s;
+}
+
+.stat-box:hover{
+    transform:translateY(-8px);
+}
+
+.stat-box h3{
+    margin:0;
+    font-size:34px;
+    color:#4f46e5;
+}
+
+.stat-box span{
+    color:#555;
+    font-size:14px;
+}
+
+/* PROJECT SECTION */
+.section{
+    margin-top:50px;
+}
+
+.section h3{
+    color:#1e293b;
+    margin-bottom:20px;
+}
+
+.projects{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
+}
+
+.project{
+    background:white;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+    border-left:6px solid #4f46e5;
+}
+
+.project p{
+    color:#555;
+    margin-top:8px;
+}
+
+/* ACTION BUTTONS */
+.actions{
+    margin-top:45px;
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    flex:1;
+    min-width:200px;
+    text-align:center;
+    padding:15px;
+    background:linear-gradient(90deg,#4f46e5,#6366f1);
+    color:#fff;
+    text-decoration:none;
+    border-radius:14px;
+    font-weight:bold;
+    box-shadow:0 8px 20px rgba(0,0,0,.18);
+    transition:transform 0.3s;
+}
+
+.btn:hover{
+    transform:translateY(-6px);
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="nav-left">🏗️ BuildPro Dashboard</div>
+    <div class="nav-right">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'projects' %}">Projects</a>
+        <a href="{% url 'profile' %}">Profile</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- WELCOME -->
+    <div class="welcome">
+        <div>
+            <h2>Welcome {{ request.user.username }} 👋</h2>
+            <p>Manage your construction projects from one place.</p>
+        </div>
+
+        <!-- 👤 CLICKABLE AVATAR -->
+        <a href="{% url 'profile' %}" style="text-decoration:none;">
+            <div class="avatar">
+                {{ request.user.username|slice:":1"|upper }}
+            </div>
+        </a>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stat-box">
+            <h3>18</h3>
+            <span>Total Projects</span>
+        </div>
+        <div class="stat-box">
+            <h3>6</h3>
+            <span>Ongoing Sites</span>
+        </div>
+        <div class="stat-box">
+            <h3>12</h3>
+            <span>Completed</span>
+        </div>
+        <div class="stat-box">
+            <h3>42</h3>
+            <span>Workers</span>
+        </div>
+    </div>
+
+    <!-- PROJECT STATUS -->
+    <div class="section">
+        <h3>📍 Current Project Status</h3>
+        <div class="projects">
+            <div class="project">
+                <b>Residential Villa – Pune</b>
+                <p>Foundation & RCC Work</p>
+            </div>
+            <div class="project">
+                <b>Commercial Complex – Mumbai</b>
+                <p>Structure in Progress</p>
+            </div>
+            <div class="project">
+                <b>Renovation – Latur</b>
+                <p>Interior Finishing</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+        <a href="#" class="btn">➕ Add Project</a>
+        <a href="#" class="btn">📸 Upload Photos</a>
+        <a href="#" class="btn">📊 View Reports</a>
+    </div>
+
+</div>
+
+</body>
+</html>
+ 

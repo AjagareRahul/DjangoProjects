@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Student</title>
+</head>
+<body>
+
+    <h2>Add Student</h2>
+
+    <!-- FORM -->
+    <form method="post">
+        {% csrf_token %}
+        {{ students.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+
+    <hr>
+
+    <!-- TABLE -->
+    <h2>Student Records</h2>
+
+    {% if students %}
+        <table border="1" cellpadding="8" cellspacing="0">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Roll No</th>
+                <th>Email</th>
+            </tr>
+
+            {% for s in students %}
+            <tr>
+                <td>{{ s.id }}</td>
+                <td>{{ s.name }}</td>
+                <td>{{ s.rollno }}</td>
+                <td>{{ s.email }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No students found</p>
+    {% endif %}
+
+</body>
+</html>

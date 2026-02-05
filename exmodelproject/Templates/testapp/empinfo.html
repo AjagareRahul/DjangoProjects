@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #74ebd5, #acb6e5);
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 30px;
+        }
+
+        table {
+            width: 70%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #d1f0e0;
+            cursor: pointer;
+        }
+
+        td {
+            color: #333;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Information</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Emp ID</th>
+            <th>Department</th>
+        </tr>
+        {% for e in emp %}
+        <tr>
+            <td>{{ e.name }}</td>
+            <td>{{ e.empid }}</td>
+            <td>{{ e.dept }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

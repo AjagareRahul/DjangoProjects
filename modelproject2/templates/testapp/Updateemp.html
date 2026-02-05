@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+   <h2>Update employee</h2>
+    <form name="frm" action="" method="post">
+       {% csrf_token %}
+      <label>Eno:</label><input type="text" name="txt1" value="{{emp.eno}}"/><br><br>
+      <label>Ename:</label><input type="text" name="txt2" value="{{emp.ename}}"/><br><br>
+      <label>Esal:</label><input type="text" name="txt3" value="{{emp.esal}}"/><br><br>
+      <input type="submit" value = "update"/>
+  </form>
+</body>
+</html>

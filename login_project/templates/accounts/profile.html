@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f8;
+        }
+
+        .navbar {
+            background: #667eea;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .profile-card {
+            background: white;
+            width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #667eea;
+            color: white;
+            font-size: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+
+        .profile-card h2 {
+            margin: 10px 0 5px;
+            color: #333;
+        }
+
+        .profile-card p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .info {
+            text-align: left;
+            margin-top: 25px;
+        }
+
+        .info div {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        .info span {
+            color: #555;
+            font-weight: bold;
+        }
+
+        .actions {
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 18px;
+            margin: 5px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #5563d6;
+        }
+
+        .btn.secondary {
+            background: #999;
+        }
+
+        .btn.secondary:hover {
+            background: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div>My Profile</div>
+    <a href="{% url 'dashboard' %}">Dashboard</a>
+</div>
+
+<div class="container">
+    <div class="profile-card">
+
+        <!-- Profile Icon -->
+        <div class="profile-pic">
+            {{ request.user.username|slice:":1"|upper }}
+        </div>
+
+        <!-- Basic Info -->
+        <h2>{{ request.user.username }}</h2>
+        <p>{{ request.user.email }}</p>
+
+        <!-- Details -->
+        <div class="info">
+            <div>
+                <span>Username</span>
+                <span>{{ request.user.username }}</span>
+            </div>
+            <div>
+                <span>Email</span>
+                <span>{{ request.user.email }}</span>
+            </div>
+            <div>
+                <span>Date Joined</span>
+                <span>{{ request.user.date_joined|date:"d M Y" }}</span>
+            </div>
+            <div>
+                <span>Last Login</span>
+                <span>{{ request.user.last_login|date:"d M Y, H:i" }}</span>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="actions">
+            <a href="{% url 'edit_profile'%}" class="btn">Edit Profile</a>
+            <a href="{% url 'logout' %}" class="btn secondary">Logout</a>
+        </div>
+
+    </div>
+</div>
+<div style="background:#1e293b;color:#fff;padding:20px;text-align:center">
+© 2026 BuildPro Construction | All Rights Reserved
+</div>
+
+
+</body>
+</html>

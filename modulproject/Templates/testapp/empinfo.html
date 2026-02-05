@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Data</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            width: 60%;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #048b08;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        p {
+            text-align: center;
+            color: red;
+            font-size: 18px;
+        }
+        .btn-update {
+            background-color: #059118;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+
+<h2>Employee List</h2>
+
+{% if employees %}
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Employee No</th>
+        <th>Employee Name</th>
+        <th>Salary</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+
+    {% for e in employees %}
+    <tr>
+        <td>{{ e.id }}</td>
+        <td>{{ e.eno }}</td>
+        <td>{{ e.ename }}</td>
+        <td>{{ e.esal  }}</td>
+        <td><button class="btn-update"><a href="{% url 'update' e.id %}" class="btn-update"><b>Update<b></a></button></td>
+        <td><button class="btn-update"><a href="{% url 'deletes' e.id %}" class="btn-update"><b>Delete<b></a></button></td>
+
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No data found</p>
+{% endif %}
+
+</body>
+</html>

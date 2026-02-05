@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <form name="frm1" action="/empinfo" method="post">
+    <label>Firstname</label>:
+    <input type="text" value="vaishali" name="txt1"/><br>
+    <label>email</label>:
+    <input type="email" name="em1"/>
+    <input type="submit"><br><br>
+      <!--<a href="/empinfo">Employee info</a>-->
+      <a href="{% url 'details'  %}">Employee info</a>
+
+  </form>
+
+</body>
+</html>

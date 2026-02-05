@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <form name="frm" action="" method="post">
+       {% csrf_token %}
+      <label>Eno:</label><input type="text" name="txt1"/><br><br>
+      <label>Ename:</label><input type="text" name="txt2"/><br><br>
+      <label>Esal:</label><input type="text" name="txt3"/><br><br>
+      <input type="submit" value = "Addemp"/>
+  </form>
+   <br><br>
+  <a href="{% url 'details'  %}">Employee info</a>
+
+</body>
+</html>

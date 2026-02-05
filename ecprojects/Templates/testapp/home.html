@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+{%load static%}
+<html>
+<head>
+    <title>Products</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .box {
+            width: 250px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .box img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .price {
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .desc {
+            color: #555;
+            margin-top: 10px;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        input, textarea {
+            width: 250px;
+            padding: 8px;
+            margin: 5px;
+        }
+
+        button {
+            padding: 8px 20px;
+            background: blue;
+            color: white;
+            border: none;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Products</h2>
+
+<div class="container">
+    {% if products %}
+        {% for p in products %}
+        <div class="box">
+            <h3>{{ p.name }}</h3>
+
+            <img src="{% static 'images/iphone14.jpeg'%}">
+
+            <div class="price">₹ {{ p.price }}</div>
+            <div class="desc">{{ p.description }}</div>
+
+            <input type="button" value="Buy Now">
+        </div>
+        {% endfor %}
+    {% else %}
+        <h2>No Records</h2>
+    {% endif %}
+</div>
+
+<h1>Add Product</h1>
+
+<form method="POST" action="">
+    {% csrf_token %}
+    {{ p.as_p }}
+    <button type="submit">Add Product</button>
+</form>
+
+
+</body>
+</html>

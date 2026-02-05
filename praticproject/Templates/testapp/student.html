@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Details</title>
+</head>
+<body>
+
+    <h2>Student Details</h2>
+
+    {% if students %}
+        <table border="1" cellpadding="8" cellspacing="0">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Roll No</th>
+                <th>Email</th>
+            </tr>
+
+            {% for s in students %}
+            <tr>
+                <td>{{ s.id }}</td>
+                <td>{{ s.name }}</td>
+                <td>{{ s.rollno }}</td>
+                <td>{{ s.email }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No students found</p>
+    {% endif %}
+
+    <br>
+    <a href="/addemp/">Add New Student</a>
+
+</body>
+</html>
