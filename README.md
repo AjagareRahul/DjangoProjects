@@ -69,3 +69,9 @@ Practice Django concepts
 Maintain all class projects in one place
 Track learning progress
 Showcase work for college and interviews
+
+👨‍💻 Author
+
+Rahul Ajagare
+Django Learner | Full Stack Aspirant
+📍 Maharashtra, India
