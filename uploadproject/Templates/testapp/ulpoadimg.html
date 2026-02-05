@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Responsive Meta Tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Website</title>
+
+    <!-- CSS File -->
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+
+    <h1>Uploading Image</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <br>
+        {{ form }}
+        <br><br>
+        <input type="submit" value="Upload">
+    </form>
+
+    <hr>
+
+    {% for x in img %}
+        <div style="margin: 20px 0; display:inline">
+            <img src="{{ x.img.url }}" height="100px">
+        </div>
+    {% endfor %}
+
+</body>
+</html>
