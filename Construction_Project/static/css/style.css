@@ -1,0 +1,27 @@
+body { margin:0; font-family: Arial; background:#fff8dc; }
+
+.nav {
+  display:flex;
+  justify-content:space-between;
+  padding:15px;
+  background:#facc15;
+}
+
+.nav a {
+  margin:0 10px;
+  text-decoration:none;
+  font-weight:bold;
+  color:black;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+  gap:20px;
+  padding:20px;
+}
+
+.card {
+  background:white;
+  padding:10px;
+}

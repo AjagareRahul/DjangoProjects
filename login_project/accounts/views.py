@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import EditProfileForm
+from .forms import EditProfileForm, Materials
+from accounts.models import Material
 
 
 # ---------- AUTH ----------
@@ -12,9 +13,9 @@ def login_view(request):
 
         user = authenticate(request, username=username, password=password)
 
-        if user is not None:
+        if user:
             login(request, user)
-            return redirect('dashboard')   # ✅ login → dashboard
+            return redirect('dashboard')
         else:
             return render(request, 'accounts/login.html', {
                 'error': 'Invalid username or password'
@@ -25,13 +26,13 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('login')   # ✅ logout → login
+    return redirect('login')
 
 
 # ---------- DASHBOARD ----------
-@login_required
 def dashboard(request):
     return render(request, 'accounts/dashboard.html')
+
 
 
 # ---------- PROFILE ----------
@@ -53,7 +54,7 @@ def edit_profile(request):
     return render(request, 'accounts/edit_profile.html', {'form': form})
 
 
-# ---------- WEBSITE PAGES (LOGIN REQUIRED) ----------
+# ---------- PAGES ----------
 @login_required
 def home(request):
     return render(request, 'accounts/home.html')
@@ -77,3 +78,24 @@ def projects(request):
 @login_required
 def contact(request):
     return render(request, 'accounts/contact.html')
+
+
+# ---------- ADD CEMENT ----------
+@login_required
+def add_cement(request):
+    if request.method == 'POST':
+        form = Materials(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cement_verity')
+    else:
+        form = Materials()
+
+    return render(request, 'accounts/add_cement.html', {'form': form})
+
+
+# ---------- SHOW CEMENT ----------
+@login_required
+def cement_verity(request):
+    cements = Material.objects.all()
+    return render(request, 'accounts/cement_verity.html', {'cements': cements })

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+    <title>Cement Varieties</title>
+    <style>
+        body{
+            font-family: Arial;
+            background:#f8fafc;
+            padding:40px;
+        }
+        .container{
+            max-width:1000px;
+            margin:auto;
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+            gap:25px;
+        }
+        .card{
+            background:white;
+            padding:20px;
+            border-radius:14px;
+            box-shadow:0 8px 20px rgba(0,0,0,.15);
+            border-left:6px solid #4f46e5;
+        }
+        h3{
+            margin:0;
+            color:#1e293b;
+        }
+        .price{
+            color:#16a34a;
+            font-weight:bold;
+            margin:8px 0;
+        }
+        .desc{
+            color:#555;
+            font-size:14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>🧱 Cement Varieties</h2>
+
+<div class="container">
+   {% for c in cements %}
+    <h3>{{ c.name }}</h3>
+
+    {% if c.image %}
+        <img src="{{ c.image.url }}" width="200">
+    {% endif %}
+
+    <p>₹ {{ c.price }}</p>
+    <p>{{ c.description }}</p>
+{% endfor %}
+
+</div>
+
+</body>
+</html>

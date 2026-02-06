@@ -1,0 +1,19 @@
+<html lang="en">
+<body>
+
+{% for message in messages %}
+<p style="color:red">{{ message }}</p>
+{% endfor %}
+
+<form method="POST">
+    {% csrf_token %}
+    Username: <input type="text" name="username" required><br><br>
+    Password: <input type="password" name="password1" required><br><br>
+    Confirm Password: <input type="password" name="password2" required><br><br>
+    <button type="submit">Register</button>
+</form>
+
+<a href="{% url 'login' %}">Login</a>
+
+</body>
+</html>

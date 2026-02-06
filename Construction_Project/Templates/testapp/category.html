@@ -1,0 +1,21 @@
+{% extends 'testapp/base.html' %}
+{% block content %}
+
+<h2>{{ cat|title }}</h2>
+
+{% for item in items %}
+  <div class="card">
+    <img src="{{ item.image.url }}">
+    <h3>{{ item.name }}</h3>
+    <p>₹{{ item.price }}</p>
+    <p>{{ item.description }}</p>
+
+    {% if user.is_authenticated %}
+      <button>Buy</button>
+    {% else %}
+      <a href="{% url 'login' %}">Login to Buy</a>
+    {% endif %}
+  </div>
+{% endfor %}
+
+{% endblock %}
