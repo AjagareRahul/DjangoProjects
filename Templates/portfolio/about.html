@@ -1,0 +1,106 @@
+{% extends 'portfolio/base.html' %}
+
+{% block title %}About | Python Developer Portfolio{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="hero" style="min-height: 40vh;">
+    <div class="container">
+        <div class="hero-content">
+            <h1>About <span>Me</span></h1>
+            <p>Learn more about my journey, experience, and passion for Python development</p>
+        </div>
+    </div>
+</section>
+
+<!-- About Content -->
+<section class="about-section">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-image">
+                <div class="placeholder-image">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+            <div class="about-text">
+                <h3>My Story</h3>
+                <p>
+                    Hello! I'm a Python software developer with a passion for creating elegant solutions
+                    to complex problems. My journey in software development began several years ago when
+                    I discovered the beauty and power of Python.
+                </p>
+                <p>
+                    Since then, I've worked on a variety of projects ranging from small scripts to
+                    large-scale web applications. I'm particularly fond of Django and Flask, which
+                    have allowed me to build robust and scalable applications.
+                </p>
+                <p>
+                    My philosophy is simple: write clean code, follow best practices, and always keep
+                    learning. The tech industry is constantly evolving, and I make it a priority to
+                    stay up-to-date with the latest trends and technologies.
+                </p>
+                <h3 style="margin-top: 2rem;">What I Do</h3>
+                <p>
+                    I specialize in building web applications using Python and Django. From designing
+                    database schemas to implementing RESTful APIs, I enjoy every aspect of the
+                    development process.
+                </p>
+                <p>
+                    I'm also experienced in working with front-end technologies like HTML, CSS,
+                    and JavaScript, which helps me create seamless full-stack applications.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Experience Section -->
+<section class="projects-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Experience</h2>
+            <div class="underline"></div>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>Senior Python Developer</h3>
+                    <p style="color: var(--primary-color); font-weight: 500; margin-bottom: 0.5rem;">Tech Company | 2022 - Present</p>
+                    <p>Leading development of large-scale web applications using Django and Python. Mentoring junior developers and implementing best practices across the team.</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>Full Stack Developer</h3>
+                    <p style="color: var(--primary-color); font-weight: 500; margin-bottom: 0.5rem;">Software Agency | 2020 - 2022</p>
+                    <p>Built and maintained multiple client projects using Django, Flask, and modern JavaScript frameworks. Implemented CI/CD pipelines and cloud deployments.</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>Junior Python Developer</h3>
+                    <p style="color: var(--primary-color); font-weight: 500; margin-bottom: 0.5rem;">StartUp Inc | 2018 - 2020</p>
+                    <p>Started my journey building REST APIs and data processing scripts. Learned the fundamentals of web development and software engineering practices.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="contact-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Let's Work Together</h2>
+            <div class="underline"></div>
+        </div>
+        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <p style="margin-bottom: 2rem; color: var(--text-light);">
+                I'm always interested in hearing about new projects and opportunities.
+                Whether you have a question or just want to say hi, feel free to reach out!
+            </p>
+            <a href="{% url 'contact' %}" class="btn btn-primary">Get In Touch</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

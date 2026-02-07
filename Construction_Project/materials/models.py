@@ -1,8 +1,7 @@
 from django.db import models
 
-# Create your models here.
 class Material(models.Model):
-    CATEGORY = [
+    CATEGORY_CHOICES = [
         ('cement', 'Cement'),
         ('sand', 'Sand'),
         ('steel', 'Steel'),
@@ -11,7 +10,7 @@ class Material(models.Model):
     ]
 
     name = models.CharField(max_length=100)
-    category = models.CharField(max_length=20, choices=CATEGORY)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     price = models.IntegerField()
     description = models.TextField()
     image = models.ImageField(upload_to='materials/')
