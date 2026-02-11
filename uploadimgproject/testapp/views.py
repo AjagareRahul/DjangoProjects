@@ -10,6 +10,7 @@ def upload_img(request):
         return redirect('show')
     form=ImageForm()
     return render(request,'testapp/uploadimg.html',{'form':form})
+
 def show_img(request):
     images=Image.objects.all()
     return render(request,'testapp/show.html',{'images':images})

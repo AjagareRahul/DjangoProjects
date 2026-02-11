@@ -6,6 +6,11 @@ from accounts.models import Material
 
 
 # ---------- AUTH ----------
+def home(request):
+    material=Material.objects.all()
+    return render(request,'testapp/home.html',{'material':material})
+
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -27,6 +32,21 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+def add_items(request):
+    if request.method=="POST":
+       material=Material(request.POST) 
+       if material.is_valid():
+           name=material.cleaned_data['name']
+           price=material.cleaned_data['price']
+           description=material.cleaned_data['description']
+           
+           material=Material(name=name,price=price,description=description)
+           material.save()
+    else:
+        m=Material()
+        material=Material.objects.all()
+    return render(request,'accounts/add_items.html',{'m':m,'material':material})
 
 
 # ---------- DASHBOARD ----------

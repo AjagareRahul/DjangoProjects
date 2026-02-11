@@ -1,0 +1,171 @@
+/* ===== RESET & BASE ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: #f4f6f8;
+    color: #333;
+}
+
+/* ===== NAVBAR ===== */
+.nav {
+    background: #1e293b;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav .left {
+    display: flex;
+    gap: 20px;
+}
+
+.nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav a:hover {
+    color: #38bdf8;
+}
+
+/* ===== HEADING ===== */
+h1 {
+    text-align: center;
+    margin: 25px 0;
+    color: #1e293b;
+}
+
+/* ===== GRID ===== */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* ===== CARD ===== */
+.card {
+    background: #fff;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.price {
+    color: #16a34a;
+    font-weight: bold;
+}
+
+/* ===== FORM ===== */
+form {
+    width: 340px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+/* ===== BUTTON ACTIONS ===== */
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* Add to Cart */
+.btn.cart {
+    background: #f59e0b;
+    color: #ffffff;
+}
+
+.btn.cart:hover {
+    background: #d97706;
+}
+
+/* Buy Now */
+.btn.buy {
+    background: #16a34a;
+    color: #ffffff;
+}
+
+.btn.buy:hover {
+    background: #15803d;
+}
+/* ===== HERO SECTION (NO BUTTONS) ===== */
+.hero {
+    height: 75vh;
+    background: linear-gradient(
+        rgba(30, 41, 59, 0.7),
+        rgba(30, 41, 59, 0.7)
+    ),
+    url("../images/construction-bg.jpg"); /* optional */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.hero-content {
+    max-width: 800px;
+    color: #ffffff;
+}
+
+.hero-content h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #e5e7eb;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 32px;
+    }
+
+    .hero-content p {
+        font-size: 16px;
+    }
+}
+

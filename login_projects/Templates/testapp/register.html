@@ -1,19 +1,124 @@
+<!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+<style>
+    * {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.container {
+    background: #fff;
+    padding: 30px;
+    width: 350px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #5a67d8;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    font-size: 14px;
+}
+
+.link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.link a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.link a:hover {
+    text-decoration: underline;
+}
+
+</style>
+</head>
 <body>
 
-{% for message in messages %}
-<p style="color:red">{{ message }}</p>
-{% endfor %}
+<div class="container">
+    <h2>Create Account</h2>
 
-<form method="POST">
-    {% csrf_token %}
-    Username: <input type="text" name="username" required><br><br>
-    Password: <input type="password" name="password1" required><br><br>
-    Confirm Password: <input type="password" name="password2" required><br><br>
-    <button type="submit">Register</button>
-</form>
+    {% for message in messages %}
+        <p class="error">{{ message }}</p>
+    {% endfor %}
 
-<a href="{% url 'login' %}">Login</a>
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Username</label>
+        <input type="text" name="username" required>
+
+        <label>Password</label>
+        <input type="password" name="password1" required>
+
+        <label>Confirm Password</label>
+        <input type="password" name="password2" required>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <p class="link">
+        Already have an account?
+        <a href="{% url 'login' %}">Login</a>
+    </p>
+</div>
 
 </body>
 </html>

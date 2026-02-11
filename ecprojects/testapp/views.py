@@ -20,6 +20,7 @@ def addprod(request):
 
     products = Product.objects.all()
     return render(request, 'testapp/home.html', {'p': p, 'products': products})
+
 def updateprod(request, pid):
     if request.method=='POST':
         name=request.POST['text1']
