@@ -1,0 +1,146 @@
+{% extends 'constructionapp/base.html' %}
+
+{% block title %}Search Results for "{{ query }}" - BuildMart{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Search Results</h1>
+        <nav class="breadcrumb">
+            <a href="{% url 'home' %}">Home</a>
+            <span>/</span>
+            <span>Search Results for "{{ query }}"</span>
+        </nav>
+    </div>
+</div>
+
+<section class="search-page-section">
+    <div class="container">
+        <div class="search-info">
+            <p>Showing results for <strong>"{{ query }}"</strong></p>
+            <p class="results-count">{{ products.count }} product{{ products.count|pluralize }} found</p>
+        </div>
+        
+        {% if products %}
+            <div class="products-grid">
+                {% for product in products %}
+                    {% include 'constructionapp/components/product_card.html' with product=product %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-results">
+                <i class="fas fa-search"></i>
+                <h3>No Products Found</h3>
+                <p>We couldn't find any products matching "{{ query }}".</p>
+                <p>Try different keywords or browse our categories:</p>
+                <div class="suggested-links">
+                    <a href="{% url 'product_list_by_category' 'cement' %}" class="btn btn-outline">
+                        <i class="fas fa-cubes"></i> Cement
+                    </a>
+                    <a href="{% url 'product_list_by_category' 'sand' %}" class="btn btn-outline">
+                        <i class="fas fa-mountain"></i> Sand
+                    </a>
+                    <a href="{% url 'product_list_by_category' 'steel' %}" class="btn btn-outline">
+                        <i class="fas fa-industry"></i> Steel
+                    </a>
+                    <a href="{% url 'product_list' %}" class="btn btn-primary">
+                        <i class="fas fa-th-large"></i> All Products
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+        
+        <div class="search-form-container">
+            <h3>Search Again</h3>
+            <form action="{% url 'search' %}" method="get" class="search-again-form">
+                <input type="text" name="q" value="{{ query }}" placeholder="Search for products..." required>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+    .search-info {
+        margin-bottom: 30px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+    
+    .search-info h2 {
+        margin: 0 0 10px 0;
+        font-size: 24px;
+    }
+    
+    .results-count {
+        margin: 0;
+        color: #666;
+        font-size: 16px;
+    }
+    
+    .no-results {
+        text-align: center;
+        padding: 60px 20px;
+    }
+    
+    .no-results i {
+        font-size: 64px;
+        color: #ddd;
+        margin-bottom: 20px;
+    }
+    
+    .no-results h3 {
+        margin: 0 0 10px 0;
+        font-size: 28px;
+        color: #333;
+    }
+    
+    .no-results p {
+        color: #666;
+        margin-bottom: 20px;
+    }
+    
+    .suggested-links {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+    
+    .search-form-container {
+        margin-top: 40px;
+        padding: 30px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        text-align: center;
+    }
+    
+    .search-form-container h3 {
+        margin: 0 0 20px 0;
+    }
+    
+    .search-again-form {
+        display: flex;
+        gap: 10px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .search-again-form input {
+        flex: 1;
+        padding: 12px 20px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    
+    .search-again-form input:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+</style>
+{% endblock %}

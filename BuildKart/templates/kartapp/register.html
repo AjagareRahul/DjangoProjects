@@ -1,0 +1,38 @@
+{% extends 'kartapp/base.html' %}
+
+{% block title %}Sign Up - BuildKart{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="kart-card p-4">
+                <h4 class="mb-4">Create Account</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" name="username" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password1" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" name="password2" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary-kart w-100">Sign Up</button>
+                </form>
+                <p class="text-center mt-3 mb-0">
+                    Already have an account? <a href="{% url 'login' %}" class="text-primary">Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

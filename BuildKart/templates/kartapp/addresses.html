@@ -1,0 +1,68 @@
+{% extends 'kartapp/base.html' %}
+
+{% block title %}My Addresses - BuildKart{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4 py-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 mb-4">
+            <div class="kart-card p-3">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'dashboard' %}" class="text-decoration-none text-dark"><i class="fas fa-home me-2"></i> Dashboard</a></li>
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'orders' %}" class="text-decoration-none text-dark"><i class="fas fa-box me-2"></i> My Orders</a></li>
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'wishlist' %}" class="text-decoration-none text-dark"><i class="fas fa-heart me-2"></i> Wishlist</a></li>
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'addresses' %}" class="text-decoration-none text-dark"><i class="fas fa-map-marker-alt me-2"></i> Addresses</a></li>
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'profile' %}" class="text-decoration-none text-dark"><i class="fas fa-user-edit me-2"></i> Edit Profile</a></li>
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'logout' %}" class="text-decoration-none text-danger"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4>My Addresses</h4>
+                <a href="{% url 'add_address' %}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i> Add New Address
+                </a>
+            </div>
+            
+            {% if addresses %}
+            <div class="row g-3">
+                {% for address in addresses %}
+                <div class="col-md-6">
+                    <div class="kart-card p-3 h-100">
+                        <div class="d-flex justify-content-between">
+                            <span class="badge bg-{% if address.address_type == 'home' %}primary{% else %}success{% endif %}">
+                                {{ address.get_address_type_display }}
+                            </span>
+                            {% if address.is_default %}
+                            <span class="badge bg-warning">Default</span>
+                            {% endif %}
+                        </div>
+                        <h6 class="mt-2">{{ address.name }}</h6>
+                        <p class="mb-1">{{ address.address }}</p>
+                        <p class="mb-1">{{ address.landmark }}</p>
+                        <p class="mb-1">{{ address.city }}, {{ address.state }} - {{ address.pincode }}</p>
+                        <p class="mb-2">Phone: {{ address.phone }}</p>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'edit_address' address.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                            <a href="{% url 'delete_address' address.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="kart-card p-4 text-center">
+                <i class="fas fa-map-marker-alt fa-3x text-muted mb-3"></i>
+                <h5>No Addresses Saved</h5>
+                <p class="text-muted">Add an address to make checkout easier</p>
+                <a href="{% url 'add_address' %}" class="btn btn-primary">Add Address</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

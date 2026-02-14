@@ -1,0 +1,196 @@
+{% extends 'constructionapp/base.html' %}
+
+{% block title %}Home - BuildMart - Construction Materials{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Quality Construction Materials Delivered to Your Site</h1>
+        <p>One-stop shop for cement, sand, steel, bricks and all construction materials</p>
+        <div class="hero-buttons">
+            <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg">Shop Now</a>
+            <a href="#categories" class="btn btn-outline btn-lg">View Categories</a>
+        </div>
+    </div>
+    <div class="hero-overlay"></div>
+</section>
+
+<!-- Categories Section -->
+<section id="categories" class="categories-section">
+    <div class="container">
+        <h2 class="section-title">Our Categories</h2>
+        <p class="section-subtitle">Explore our wide range of construction materials</p>
+        
+        <div class="categories-grid">
+            {% for category in categories %}
+                <a href="{% url 'product_list_by_category' category.slug %}" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas {{ category.icon }}"></i>
+                    </div>
+                    <h3>{{ category.name }}</h3>
+                    <p>{{ category.description }}</p>
+                    <span class="category-link">Explore <i class="fas fa-arrow-right"></i></span>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section class="featured-section">
+    <div class="container">
+        <h2 class="section-title">Featured Products</h2>
+        <p class="section-subtitle">Top quality products for your construction needs</p>
+        
+        <div class="products-grid">
+            {% for product in featured_products %}
+                {% include 'constructionapp/components/product_card.html' with product=product %}
+            {% empty %}
+                <div class="no-products">
+                    <i class="fas fa-box-open"></i>
+                    <p>No products available at the moment</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Cement Products -->
+{% if cement_products %}
+<section class="products-section">
+    <div class="container">
+        <h2 class="section-title">Premium Cement</h2>
+        <p class="section-subtitle">Top quality cement for strong foundations</p>
+        
+        <div class="products-grid">
+            {% for product in cement_products %}
+                {% include 'constructionapp/components/product_card.html' with product=product %}
+            {% endfor %}
+        </div>
+        
+        <div class="view-all">
+            <a href="{% url 'product_list_by_category' 'cement' %}" class="btn btn-primary">View All Cement Products</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Bricks Section -->
+{% if brick_products %}
+<section class="products-section brick-section">
+    <div class="container">
+        <h2 class="section-title">Quality Bricks</h2>
+        <p class="section-subtitle">Red bricks, fly ash blocks, and concrete blocks</p>
+        
+        <div class="products-grid">
+            {% for product in brick_products %}
+                {% include 'constructionapp/components/product_card.html' with product=product %}
+            {% endfor %}
+        </div>
+        
+        <div class="view-all">
+            <a href="{% url 'product_list_by_category' 'brick' %}" class="btn btn-primary">View All Bricks</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Sand Products -->
+{% if sand_products %}
+<section class="products-section">
+    <div class="container">
+        <h2 class="section-title">Quality Sand</h2>
+        <p class="section-subtitle">Premium sand for all construction purposes</p>
+        
+        <div class="products-grid">
+            {% for product in sand_products %}
+                {% include 'constructionapp/components/product_card.html' with product=product %}
+            {% endfor %}
+        </div>
+        
+        <div class="view-all">
+            <a href="{% url 'product_list_by_category' 'sand' %}" class="btn btn-primary">View All Sand Products</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Steel Products -->
+{% if steel_products %}
+<section class="products-section steel-section">
+    <div class="container">
+        <h2 class="section-title">Strong Steel Bars</h2>
+        <p class="section-subtitle">High-quality TMT bars and steel products</p>
+        
+        <div class="products-grid">
+            {% for product in steel_products %}
+                {% include 'constructionapp/components/product_card.html' with product=product %}
+            {% endfor %}
+        </div>
+        
+        <div class="view-all">
+            <a href="{% url 'product_list_by_category' 'steel' %}" class="btn btn-primary">View All Steel Products</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <div class="feature-content">
+                    <h4>Fast Delivery</h4>
+                    <p>Same-day delivery available</p>
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="feature-content">
+                    <h4>Quality Guaranteed</h4>
+                    <p>100% original products</p>
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-tags"></i>
+                </div>
+                <div class="feature-content">
+                    <h4>Best Prices</h4>
+                    <p>Competitive market rates</p>
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <div class="feature-content">
+                    <h4>24/7 Support</h4>
+                    <p>Dedicated customer service</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Ready to Start Your Construction Project?</h2>
+            <p>Get all your construction materials delivered to your site at the best prices</p>
+            <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg">Browse All Products</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

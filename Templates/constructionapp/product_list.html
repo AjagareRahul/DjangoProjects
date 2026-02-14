@@ -1,0 +1,95 @@
+{% extends 'constructionapp/base.html' %}
+
+{% block title %}Products - {{ category_name }} - BuildMart{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>{{ category_name }}</h1>
+        <nav class="breadcrumb">
+            <a href="{% url 'home' %}">Home</a>
+            <span>/</span>
+            <span>{{ category_name }}</span>
+        </nav>
+    </div>
+</div>
+
+<section class="products-page-section">
+    <div class="container">
+        <div class="products-layout">
+            <!-- Sidebar -->
+            <aside class="products-sidebar">
+                <div class="sidebar-section">
+                    <h3>Categories</h3>
+                    <ul class="category-list">
+                        <li {% if not current_category %}class="active"{% endif %}>
+                            <a href="{% url 'product_list' %}">
+                                <i class="fas fa-th-large"></i> All Products
+                            </a>
+                        </li>
+                        <li {% if current_category == 'cement' %}class="active"{% endif %}>
+                            <a href="{% url 'product_list_by_category' 'cement' %}">
+                                <i class="fas fa-cubes"></i> Cement
+                            </a>
+                        </li>
+                        <li {% if current_category == 'sand' %}class="active"{% endif %}>
+                            <a href="{% url 'product_list_by_category' 'sand' %}">
+                                <i class="fas fa-mountain"></i> Sand
+                            </a>
+                        </li>
+                        <li {% if current_category == 'steel' %}class="active"{% endif %}>
+                            <a href="{% url 'product_list_by_category' 'steel' %}">
+                                <i class="fas fa-industry"></i> Steel
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3>About {{ category_name }}</h3>
+                    <p class="category-description">
+                        {% if current_category == 'cement' %}
+                            High-quality cement for strong foundations. Available in OPC, PPC, White Cement, and more variants for all your construction needs.
+                        {% elif current_category == 'sand' %}
+                            Premium quality sand including River Sand, Manufactured Sand (M-Sand), and Plastering Sand for various construction purposes.
+                        {% elif current_category == 'steel' %}
+                            Superior strength TMT bars and steel products. Available in Fe 415, Fe 500, Fe 550 grades for reinforced concrete structures.
+                        {% else %}
+                            Complete range of construction materials including Cement, Sand, Steel, and more at competitive prices.
+                        {% endif %}
+                    </p>
+                </div>
+            </aside>
+            
+            <!-- Products Grid -->
+            <div class="products-main">
+                <div class="products-header">
+                    <p class="products-count">{{ products.count }} Products Found</p>
+                    <div class="products-sort">
+                        <label for="sort-select">Sort by:</label>
+                        <select id="sort-select">
+                            <option value="default">Default</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="name">Name: A to Z</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="products-grid">
+                    {% for product in products %}
+                        {% include 'constructionapp/components/product_card.html' with product=product %}
+                    {% empty %}
+                        <div class="no-products-full">
+                            <i class="fas fa-box-open"></i>
+                            <h3>No Products Found</h3>
+                            <p>No products available in this category at the moment.</p>
+                            <a href="{% url 'product_list' %}" class="btn btn-primary">View All Products</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

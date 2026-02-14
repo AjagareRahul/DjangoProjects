@@ -1,0 +1,221 @@
+{% extends 'kartapp/base.html' %}
+
+{% block title %}My Account - BuildKart{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4 py-4">
+    <h4 class="mb-4">Welcome to BuildKart, {{ user.get_full_name|default:user.username }}!</h4>
+    
+    <!-- Quick Action Cards - All Main Features -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="kart-card p-3 text-center h-100">
+                <a href="{% url 'product_list' %}" class="text-decoration-none">
+                    <i class="fas fa-shopping-bag fa-2x text-primary mb-2"></i>
+                    <h6 class="mb-0">Products</h6>
+                    <small class="text-muted">Browse All</small>
+                </a>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="kart-card p-3 text-center h-100">
+                <a href="{% url 'cart' %}" class="text-decoration-none">
+                    <i class="fas fa-shopping-cart fa-2x text-warning mb-2"></i>
+                    <h6 class="mb-0">Cart</h6>
+                    <small class="text-muted">View Cart</small>
+                </a>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="kart-card p-3 text-center h-100">
+                <a href="{% url 'orders' %}" class="text-decoration-none">
+                    <i class="fas fa-box fa-2x text-success mb-2"></i>
+                    <h6 class="mb-0">Orders</h6>
+                    <small class="text-muted">Track Orders</small>
+                </a>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="kart-card p-3 text-center h-100">
+                <a href="{% url 'wishlist' %}" class="text-decoration-none">
+                    <i class="fas fa-heart fa-2x text-danger mb-2"></i>
+                    <h6 class="mb-0">Wishlist</h6>
+                    <small class="text-muted">Saved Items</small>
+                </a>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="kart-card p-3 text-center h-100">
+                <a href="{% url 'addresses' %}" class="text-decoration-none">
+                    <i class="fas fa-map-marker-alt fa-2x text-info mb-2"></i>
+                    <h6 class="mb-0">Addresses</h6>
+                    <small class="text-muted">Manage</small>
+                </a>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="kart-card p-3 text-center h-100">
+                <a href="{% url 'profile' %}" class="text-decoration-none">
+                    <i class="fas fa-user-cog fa-2x text-secondary mb-2"></i>
+                    <h6 class="mb-0">Profile</h6>
+                    <small class="text-muted">Edit Info</small>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Sidebar with all links -->
+        <div class="col-md-3 mb-4">
+            <div class="kart-card p-3">
+                <div class="text-center mb-3">
+                    <i class="fas fa-user-circle fa-4x text-primary"></i>
+                    <h6 class="mt-2 mb-0">{{ user.get_full_name|default:user.username }}</h6>
+                    <small class="text-muted">{{ user.email }}</small>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item border-0 ps-0">
+                        <a href="{% url 'dashboard' %}" class="text-decoration-none text-dark d-flex align-items-center">
+                            <i class="fas fa-home me-2 text-primary"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="list-group-item border-0 ps-0">
+                        <a href="{% url 'product_list' %}" class="text-decoration-none text-dark d-flex align-items-center">
+                            <i class="fas fa-shopping-bag me-2 text-primary"></i> Products
+                        </a>
+                    </li>
+                    <li class="list-group-item border-0 ps-0">
+                        <a href="{% url 'cart' %}" class="text-decoration-none text-dark d-flex align-items-center">
+                            <i class="fas fa-shopping-cart me-2 text-warning"></i> Cart
+                        </a>
+                    </li>
+                    <li class="list-group-item border-0 ps-0">
+                        <a href="{% url 'orders' %}" class="text-decoration-none text-dark d-flex align-items-center">
+                            <i class="fas fa-box me-2 text-success"></i> My Orders
+                        </a>
+                    </li>
+                    <li class="list-group-item border-0 ps-0">
+                        <a href="{% url 'wishlist' %}" class="text-decoration-none text-dark d-flex align-items-center">
+                            <i class="fas fa-heart me-2 text-danger"></i> Wishlist
+                        </a>
+                    </li>
+                    <li class="list-group-item border-0 ps-0">
+                        <a href="{% url 'addresses' %}" class="text-decoration-none text-dark d-flex align-items-center">
+                            <i class="fas fa-map-marker-alt me-2 text-info"></i> Addresses
+                        </a>
+                    </li>
+                    <li class="list-group-item border-0 ps-0">
+                        <a href="{% url 'profile' %}" class="text-decoration-none text-dark d-flex align-items-center">
+                            <i class="fas fa-user-edit me-2 text-secondary"></i> Edit Profile
+                        </a>
+                    </li>
+                    <li class="list-group-item border-0 ps-0">
+                        <a href="{% url 'logout' %}" class="text-decoration-none text-danger d-flex align-items-center">
+                            <i class="fas fa-sign-out-alt me-2"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <!-- Quick Stats -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="kart-card p-3 text-center">
+                        <i class="fas fa-shopping-cart fa-2x text-primary mb-2"></i>
+                        <h5 class="mb-0">{{ orders.count }}</h5>
+                        <small class="text-muted">Total Orders</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="kart-card p-3 text-center">
+                        <i class="fas fa-heart fa-2x text-danger mb-2"></i>
+                        <h5 class="mb-0">{{ wishlist.count }}</h5>
+                        <small class="text-muted">Wishlist Items</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="kart-card p-3 text-center">
+                        <i class="fas fa-map-marker-alt fa-2x text-success mb-2"></i>
+                        <h5 class="mb-0">{{ addresses.count }}</h5>
+                        <small class="text-muted">Saved Addresses</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Orders -->
+            {% if orders %}
+            <div class="kart-card p-3 mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">Recent Orders</h5>
+                    <a href="{% url 'orders' %}" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders|slice:":5" %}
+                            <tr>
+                                <td>{{ order.order_number }}</td>
+                                <td>{{ order.created_at|date:"d M Y" }}</td>
+                                <td><span class="badge bg-{% if order.status == 'delivered' %}success{% elif order.status == 'cancelled' %}danger{% else %}warning{% endif %}">{{ order.status }}</span></td>
+                                <td>₹{{ order.total }}</td>
+                                <td><a href="{% url 'order_detail' order.id %}">View</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% else %}
+            <!-- No Orders - Show Shop Now CTA -->
+            <div class="kart-card p-4 mb-4 text-center">
+                <i class="fas fa-shopping-bag fa-3x text-primary mb-3"></i>
+                <h5>Start Shopping</h5>
+                <p class="text-muted mb-3">You haven't placed any orders yet. Browse our products and start building!</p>
+                <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-shopping-cart me-2"></i> Shop Now
+                </a>
+            </div>
+            {% endif %}
+            
+            <!-- Quick Actions Grid -->
+            <div class="kart-card p-3">
+                <h5 class="mb-3">Quick Actions</h5>
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <a href="{% url 'product_list' %}" class="btn btn-outline-primary w-100 py-3">
+                            <i class="fas fa-th-large me-2"></i> All Products
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{% url 'cart' %}" class="btn btn-outline-warning w-100 py-3">
+                            <i class="fas fa-shopping-cart me-2"></i> View Cart
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{% url 'orders' %}" class="btn btn-outline-success w-100 py-3">
+                            <i class="fas fa-box me-2"></i> My Orders
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{% url 'wishlist' %}" class="btn btn-outline-danger w-100 py-3">
+                            <i class="fas fa-heart me-2"></i> My Wishlist
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

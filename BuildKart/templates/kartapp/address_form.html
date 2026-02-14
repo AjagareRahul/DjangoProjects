@@ -1,0 +1,89 @@
+{% extends 'kartapp/base.html' %}
+
+{% block title %}{% if address %}Edit Address{% else %}Add Address{% endif %} - BuildKart{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4 py-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 mb-4">
+            <div class="kart-card p-3">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'dashboard' %}" class="text-decoration-none text-dark"><i class="fas fa-home me-2"></i> Dashboard</a></li>
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'orders' %}" class="text-decoration-none text-dark"><i class="fas fa-box me-2"></i> My Orders</a></li>
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'wishlist' %}" class="text-decoration-none text-dark"><i class="fas fa-heart me-2"></i> Wishlist</a></li>
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'addresses' %}" class="text-decoration-none text-dark"><i class="fas fa-map-marker-alt me-2"></i> Addresses</a></li>
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'profile' %}" class="text-decoration-none text-dark"><i class="fas fa-user-edit me-2"></i> Edit Profile</a></li>
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'logout' %}" class="text-decoration-none text-danger"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <div class="kart-card p-4">
+                <h4 class="mb-4">{% if address %}Edit Address{% else %}Add New Address{% endif %}</h4>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" name="name" value="{{ address.name|default:'' }}" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text" name="phone" value="{{ address.phone|default:'' }}" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Address Type</label>
+                        <select name="address_type" class="form-select">
+                            <option value="home" {% if address.address_type == 'home' %}selected{% endif %}>Home</option>
+                            <option value="office" {% if address.address_type == 'office' %}selected{% endif %}>Office</option>
+                            <option value="other" {% if address.address_type == 'other' %}selected{% endif %}>Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <textarea name="address" class="form-control" rows="2" required>{{ address.address|default:'' }}</textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Landmark (Optional)</label>
+                        <input type="text" name="landmark" value="{{ address.landmark|default:'' }}" class="form-control">
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">City</label>
+                            <input type="text" name="city" value="{{ address.city|default:'' }}" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">State</label>
+                            <input type="text" name="state" value="{{ address.state|default:'' }}" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Pincode</label>
+                            <input type="text" name="pincode" value="{{ address.pincode|default:'' }}" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-check mb-3">
+                        <input type="checkbox" name="is_default" class="form-check-input" id="default" {% if address.is_default %}checked{% endif %}>
+                        <label class="form-check-label" for="default">Set as default address</label>
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Save Address</button>
+                        <a href="{% url 'addresses' %}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

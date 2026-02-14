@@ -1,0 +1,175 @@
+{% extends 'kartapp/base.html' %}
+
+{% block title %}BuildKart - Construction Materials Online Store{% endblock %}
+
+{% block content %}
+<!-- Hero Banner -->
+<div class="container-fluid px-4 mb-4">
+    <div class="kart-card p-0">
+        <div class="position-relative">
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200" alt="Construction Materials" class="w-100" style="height: 280px; object-fit: cover;">
+            <div class="position-absolute top-50 start-50 translate-middle text-center text-white" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
+                <h1 class="fw-bold mb-3">Order Construction Materials Online</h1>
+                <p class="fs-5 mb-4">Fast & Reliable Delivery to Your Site</p>
+                <a href="{% url 'product_list' %}" class="btn btn-secondary-kart btn-lg">Shop Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Categories -->
+<div class="container-fluid px-4 mb-4">
+    <div class="kart-card p-3">
+        <h5 class="mb-3 fw-bold">Shop By Category</h5>
+        <div class="row text-center">
+            {% for category in all_categories|slice:":8" %}
+            <div class="col-6 col-md-3 col-lg-2">
+                <a href="{% url 'product_list_by_category' category.slug %}" class="text-decoration-none">
+                    <div class="category-item py-3">
+                        <i class="fas {{ category.icon|default:'fa-box' }} fa-2x text-primary mb-2"></i>
+                        <p class="mb-0 text-dark">{{ category.name }}</p>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Best Sellers -->
+{% if best_sellers %}
+<div class="container-fluid px-4 mb-4">
+    <div class="kart-card p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0">Best Sellers</h5>
+            <a href="{% url 'product_list' %}" class="btn btn-sm btn-primary-kart">View All</a>
+        </div>
+        <div class="row g-3">
+            {% for product in best_sellers %}
+            <div class="col-6 col-md-4 col-lg-2">
+                {% include 'kartapp/components/product_card.html' %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Featured Products -->
+{% if featured_products %}
+<div class="container-fluid px-4 mb-4">
+    <div class="kart-card p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0">Featured Products</h5>
+            <a href="{% url 'product_list' %}?sort=rating" class="btn btn-sm btn-primary-kart">View All</a>
+        </div>
+        <div class="row g-3">
+            {% for product in featured_products %}
+            <div class="col-6 col-md-4 col-lg-2">
+                {% include 'kartapp/components/product_card.html' %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Cement Products -->
+{% if cement_products %}
+<div class="container-fluid px-4 mb-4">
+    <div class="kart-card p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0">Cement - Top Brands</h5>
+            <a href="{% url 'product_list_by_category' 'cement' %}" class="btn btn-sm btn-primary-kart">View All</a>
+        </div>
+        <div class="row g-3">
+            {% for product in cement_products %}
+            <div class="col-6 col-md-4 col-lg-2">
+                {% include 'kartapp/components/product_card.html' %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Steel Products -->
+{% if steel_products %}
+<div class="container-fluid px-4 mb-4">
+    <div class="kart-card p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0">Steel - TMT Bars & More</h5>
+            <a href="{% url 'product_list_by_category' 'steel' %}" class="btn btn-sm btn-primary-kart">View All</a>
+        </div>
+        <div class="row g-3">
+            {% for product in steel_products %}
+            <div class="col-6 col-md-4 col-lg-2">
+                {% include 'kartapp/components/product_card.html' %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Testimonials -->
+{% if testimonials %}
+<div class="container-fluid px-4 mb-4">
+    <div class="kart-card p-4">
+        <h5 class="fw-bold mb-4 text-center">What Our Customers Say</h5>
+        <div class="row g-4">
+            {% for testimonial in testimonials %}
+            <div class="col-md-4">
+                <div class="testimonial-card p-3" style="background: #f9f9f9; border-radius: 8px;">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="testimonial-avatar me-2">
+                            <i class="fas fa-user-circle fa-2x text-primary"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">{{ testimonial.name }}</h6>
+                            <small class="text-muted">{{ testimonial.company }}</small>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        {% for i in "12345"|make_list %}
+                            <i class="fas fa-star" style="color: {% if forloop.counter <= testimonial.rating %}#ff9f00{% else %}#e0e0e0{% endif %};"></i>
+                        {% endfor %}
+                    </div>
+                    <p class="mb-0">{{ testimonial.message }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Why Choose Us -->
+<div class="container-fluid px-4 mb-4">
+    <div class="kart-card p-4">
+        <h5 class="fw-bold mb-4 text-center">Why Choose BuildKart?</h5>
+        <div class="row g-4 text-center">
+            <div class="col-md-3">
+                <i class="fas fa-truck fa-2x text-primary mb-3"></i>
+                <h6>Fast Delivery</h6>
+                <p class="text-muted small mb-0">Same-day delivery for orders above ₹5000</p>
+            </div>
+            <div class="col-md-3">
+                <i class="fas fa-shield-alt fa-2x text-primary mb-3"></i>
+                <h6>Quality Guaranteed</h6>
+                <p class="text-muted small mb-0">100% original products from trusted brands</p>
+            </div>
+            <div class="col-md-3">
+                <i class="fas fa-tags fa-2x text-primary mb-3"></i>
+                <h6>Best Prices</h6>
+                <p class="text-muted small mb-0">Competitive rates for bulk orders</p>
+            </div>
+            <div class="col-md-3">
+                <i class="fas fa-headset fa-2x text-primary mb-3"></i>
+                <h6>24/7 Support</h6>
+                <p class="text-muted small mb-0">Dedicated customer service</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,214 @@
+{% extends 'constructionapp/base.html' %}
+
+{% block title %}Dashboard - BuildMart{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Welcome, {{ user.get_full_name|default:user.username }}!</h1>
+        <nav class="breadcrumb">
+            <a href="{% url 'home' %}">Home</a>
+            <span>/</span>
+            <span>Dashboard</span>
+        </nav>
+    </div>
+</div>
+
+<section class="dashboard-section">
+    <div class="container">
+        <div class="dashboard-layout">
+            <!-- Sidebar -->
+            <aside class="dashboard-sidebar">
+                <div class="user-profile-card">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-info">
+                        <h3>{{ user.get_full_name|default:user.username }}</h3>
+                        <p>{{ user.email }}</p>
+                    </div>
+                </div>
+                
+                <nav class="dashboard-nav">
+                    <a href="{% url 'dashboard' %}" class="active">
+                        <i class="fas fa-store"></i> Shop Products
+                    </a>
+                    <a href="{% url 'profile' %}">
+                        <i class="fas fa-user-edit"></i> Edit Profile
+                    </a>
+                    <a href="{% url 'order_history' %}">
+                        <i class="fas fa-box"></i> My Orders
+                    </a>
+                    <a href="{% url 'cart' %}">
+                        <i class="fas fa-shopping-cart"></i> My Cart
+                    </a>
+                    <a href="{% url 'logout' %}">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </nav>
+            </aside>
+            
+            <!-- Main Content -->
+            <div class="dashboard-content">
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Cart</h3>
+                            <p>View your cart</p>
+                        </div>
+                        <a href="{% url 'cart' %}" class="stat-link">View Cart <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Orders</h3>
+                            <p>{{ orders.count }} orders</p>
+                        </div>
+                        <a href="{% url 'order_history' %}" class="stat-link">View Orders <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Profile</h3>
+                            <p>Manage your info</p>
+                        </div>
+                        <a href="{% url 'profile' %}" class="stat-link">Edit Profile <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Shop by Category -->
+                <div class="dashboard-section-card">
+                    <div class="section-header">
+                        <h2><i class="fas fa-th-large"></i> Shop by Category</h2>
+                        <a href="{% url 'product_list' %}" class="view-all">View All Products</a>
+                    </div>
+                    
+                    <div class="category-quick-links">
+                        <a href="{% url 'product_list_by_category' 'cement' %}" class="category-quick-btn">
+                            <i class="fas fa-cubes"></i> Cement
+                        </a>
+                        <a href="{% url 'product_list_by_category' 'brick' %}" class="category-quick-btn">
+                            <i class="fas fa-th-large"></i> Bricks
+                        </a>
+                        <a href="{% url 'product_list_by_category' 'sand' %}" class="category-quick-btn">
+                            <i class="fas fa-mountain"></i> Sand
+                        </a>
+                        <a href="{% url 'product_list_by_category' 'steel' %}" class="category-quick-btn">
+                            <i class="fas fa-industry"></i> Steel
+                        </a>
+                        <a href="{% url 'product_list_by_category' 'aggregate' %}" class="category-quick-btn">
+                            <i class="fas fa-cubes-stacked"></i> Aggregates
+                        </a>
+                        <a href="{% url 'product_list_by_category' 'hardware' %}" class="category-quick-btn">
+                            <i class="fas fa-tools"></i> Hardware
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Available Products -->
+                <div class="dashboard-section-card">
+                    <div class="section-header">
+                        <h2><i class="fas fa-boxes"></i> Available Products</h2>
+                        <a href="{% url 'product_list' %}" class="view-all">View All</a>
+                    </div>
+                    
+                    <div class="products-grid">
+                        {% for product in all_products %}
+                            <div class="product-card">
+                                <div class="product-image">
+                                    {% if product.image %}
+                                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                                    {% else %}
+                                        <div class="no-image">
+                                            <i class="fas fa-image"></i>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="product-info">
+                                    <span class="product-category">{{ product.category|capfirst }}</span>
+                                    <h3 class="product-title">
+                                        <a href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
+                                    </h3>
+                                    <p class="product-description">{{ product.description|truncatewords:15 }}</p>
+                                    <div class="product-price">
+                                        <span class="price">₹{{ product.price }}</span>
+                                        <span class="unit">per {{ product.unit }}</span>
+                                    </div>
+                                    <div class="stock-info">
+                                        <span class="stock {% if product.stock > 0 %}in-stock{% else %}out-of-stock{% endif %}">
+                                            {% if product.stock > 0 %}{{ product.stock }} {{ product.unit }}s available{% else %}Out of Stock{% endif %}
+                                        </span>
+                                    </div>
+                                    {% if product.is_available and product.stock > 0 %}
+                                        <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="quantity" value="1">
+                                            <button type="submit" class="btn btn-primary btn-block">
+                                                <i class="fas fa-cart-plus"></i> Add to Cart
+                                            </button>
+                                        </form>
+                                    {% else %}
+                                        <button class="btn btn-secondary btn-block" disabled>Out of Stock</button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="empty-state">
+                                <i class="fas fa-box-open"></i>
+                                <p>No products available</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Recent Orders -->
+                {% if orders %}
+                <div class="dashboard-section-card">
+                    <div class="section-header">
+                        <h2><i class="fas fa-clock"></i> Recent Orders</h2>
+                        <a href="{% url 'order_history' %}" class="view-all">View All</a>
+                    </div>
+                    
+                    <div class="orders-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                    <tr>
+                                        <td>
+                                            <span class="order-id">#{{ order.order_number }}</span>
+                                        </td>
+                                        <td>{{ order.created_at|date:"d M Y" }}</td>
+                                        <td>
+                                            <span class="status-badge status-{{ order.status|lower }}">{{ order.get_status_display }}</span>
+                                        </td>
+                                        <td>₹{{ order.total_amount }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

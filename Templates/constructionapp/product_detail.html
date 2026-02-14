@@ -1,0 +1,154 @@
+{% extends 'constructionapp/base.html' %}
+
+{% block title %}{{ product.name }} - BuildMart{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>{{ product.name }}</h1>
+        <nav class="breadcrumb">
+            <a href="{% url 'home' %}">Home</a>
+            <span>/</span>
+            <a href="{% url 'product_list' %}">Products</a>
+            <span>/</span>
+            <a href="{% url 'product_list_by_category' product.category %}">{{ product.category|capfirst }}</a>
+            <span>/</span>
+            <span>{{ product.name }}</span>
+        </nav>
+    </div>
+</div>
+
+<section class="product-detail-section">
+    <div class="container">
+        <div class="product-detail-grid">
+            <!-- Product Image -->
+            <div class="product-image-container">
+                <div class="product-main-image">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                        <div class="no-image-placeholder">
+                            <i class="fas fa-image"></i>
+                            <span>No Image Available</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Product Info -->
+            <div class="product-info-container">
+                <div class="product-category-badge">
+                    <span class="category-tag">{{ product.category|capfirst }}</span>
+                    {% if product.sub_category %}
+                        <span class="sub-category-tag">{{ product.sub_category }}</span>
+                    {% endif %}
+                </div>
+                
+                <h1 class="product-title">{{ product.name }}</h1>
+                
+                <div class="product-price-box">
+                    <span class="current-price">₹{{ product.price }}</span>
+                    <span class="price-unit">per {{ product.unit }}</span>
+                </div>
+                
+                <div class="product-availability">
+                    {% if product.stock > 0 %}
+                        <span class="in-stock">
+                            <i class="fas fa-check-circle"></i> In Stock ({{ product.stock }} {{ product.unit }}s available)
+                        </span>
+                    {% else %}
+                        <span class="out-of-stock">
+                            <i class="fas fa-times-circle"></i> Out of Stock
+                        </span>
+                    {% endif %}
+                </div>
+                
+                <div class="product-description">
+                    <h3>Description</h3>
+                    <p>{{ product.description }}</p>
+                </div>
+                
+                {% if product.is_available and product.stock > 0 %}
+                    <form method="POST" action="{% url 'add_to_cart' product.id %}" class="add-to-cart-form">
+                        {% csrf_token %}
+                        <div class="quantity-selector">
+                            <label for="quantity">Quantity:</label>
+                            <div class="quantity-input-group">
+                                <button type="button" class="qty-btn minus" onclick="decreaseQty()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ product.stock }}">
+                                <button type="button" class="qty-btn plus" onclick="increaseQty()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="add-to-cart-actions">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                            </button>
+                            <a href="{% url 'product_list' %}" class="btn btn-outline">
+                                Continue Shopping
+                            </a>
+                        </div>
+                    </form>
+                {% else %}
+                    <div class="unavailable-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>This product is currently unavailable.</p>
+                        <a href="{% url 'product_list' %}" class="btn btn-primary">Browse Other Products</a>
+                    </div>
+                {% endif %}
+                
+                <!-- Product Meta -->
+                <div class="product-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-truck"></i>
+                        <span>Free delivery on orders above ₹5000</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>100% Authentic Product</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-undo"></i>
+                        <span>Easy returns within 7 days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Related Products -->
+        {% if related_products %}
+        <div class="related-products-section">
+            <h2 class="section-title">Related Products</h2>
+            <div class="products-grid">
+                {% for related in related_products %}
+                    {% include 'constructionapp/components/product_card.html' with product=related %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function decreaseQty() {
+        const input = document.getElementById('quantity');
+        if (parseInt(input.value) > 1) {
+            input.value = parseInt(input.value) - 1;
+        }
+    }
+    
+    function increaseQty() {
+        const input = document.getElementById('quantity');
+        const max = parseInt(input.max);
+        if (parseInt(input.value) < max) {
+            input.value = parseInt(input.value) + 1;
+        }
+    }
+</script>
+{% endblock %}

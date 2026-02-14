@@ -1,0 +1,119 @@
+{% extends 'kartapp/base.html' %}
+
+{% block title %}{{ product.name }} - BuildKart{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4 py-4">
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-5">
+            <div class="kart-card p-4 text-center">
+                <i class="fas fa-box fa-5x text-primary"></i>
+            </div>
+        </div>
+        
+        <!-- Product Details -->
+        <div class="col-md-7">
+            <div class="kart-card p-4">
+                <nav aria-label="breadcrumb" class="mb-2">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'product_list' %}">Products</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'product_list_by_category' product.category.slug %}">{{ product.category.name }}</a></li>
+                        <li class="breadcrumb-item active">{{ product.name|truncatechars:30 }}</li>
+                    </ol>
+                </nav>
+                
+                <h4>{{ product.name }}</h4>
+                
+                {% if product.brand %}
+                <p class="text-muted mb-2">Brand: {{ product.brand.name }}</p>
+                {% endif %}
+                
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="h4 mb-0">₹{{ product.price }}</span>
+                    {% if product.original_price > product.price %}
+                    <span class="text-muted text-decoration-line-through">₹{{ product.original_price }}</span>
+                    <span class="badge bg-success">{{ product.discount_percentage }}% OFF</span>
+                    {% endif %}
+                </div>
+                
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rating me-2">
+                        {% for i in "12345" %}
+                        <i class="fas fa-star {% if forloop.counter <= product.rating %}text-warning{% else %}text-muted{% endif %}"></i>
+                        {% endfor %}
+                    </div>
+                    <span class="text-muted">({{ product.num_reviews }} reviews)</span>
+                </div>
+                
+                <p class="mb-3">{{ product.short_description }}</p>
+                
+                <div class="mb-3">
+                    <strong>Available:</strong>
+                    {% if product.in_stock %}
+                    <span class="text-success">In Stock ({{ product.stock }} available)</span>
+                    {% else %}
+                    <span class="text-danger">Out of Stock</span>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <strong>Delivery:</strong> {{ product.delivery_days }} days
+                </div>
+                
+                {% if product.in_stock %}
+                <div class="d-flex gap-2 mb-4">
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn btn-warning flex-grow-1">
+                        <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                    </a>
+                    <a href="{% url 'add_to_wishlist' product.id %}" class="btn btn-outline-danger">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                </div>
+                {% else %}
+                <button class="btn btn-secondary w-100 mb-4" disabled>Out of Stock</button>
+                {% endif %}
+                
+                <!-- Product Description -->
+                <div class="mb-4">
+                    <h5>Product Description</h5>
+                    <p>{{ product.description }}</p>
+                </div>
+                
+                {% if product.specifications %}
+                <div class="mb-4">
+                    <h5>Specifications</h5>
+                    <p>{{ product.specifications }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reviews Section -->
+    {% if reviews %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="kart-card p-4">
+                <h5 class="mb-3">Customer Reviews</h5>
+                {% for review in reviews %}
+                <div class="border-bottom pb-3 mb-3">
+                    <div class="d-flex justify-content-between">
+                        <strong>{{ review.user.username }}</strong>
+                        <span class="text-warning">
+                            {% for i in "12345" %}
+                            <i class="fas fa-star {% if forloop.counter <= review.rating %}text-warning{% else %}text-muted{% endif %}"></i>
+                            {% endfor %}
+                        </span>
+                    </div>
+                    <h6>{{ review.title }}</h6>
+                    <p class="mb-1">{{ review.review }}</p>
+                    <small class="text-muted">{{ review.created_at|date:"d M Y" }}</small>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

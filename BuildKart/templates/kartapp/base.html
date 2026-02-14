@@ -1,0 +1,499 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BuildKart - Your trusted online store for construction materials">
+    <title>{% block title %}BuildKart - Construction Materials Online{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2874f0;
+            --primary-dark: #1a5bb5;
+            --secondary: #ff9f00;
+            --yellow: #ff9f00;
+            --blue: #2874f0;
+            --white: #ffffff;
+            --light-bg: #f1f3f6;
+            --dark-text: #212121;
+            --gray-text: #878787;
+            --border: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+        }
+        
+        /* Header Styles */
+        .buildkart-header {
+            background: var(--primary);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-search {
+            position: relative;
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        .header-search input {
+            width: 100%;
+            padding: 10px 50px 10px 20px;
+            border: none;
+            border-radius: 2px;
+            font-size: 14px;
+        }
+        
+        .header-search button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: var(--white);
+            border: none;
+            padding: 0 15px;
+            color: var(--primary);
+        }
+        
+        .header-search button:hover {
+            background: #e8e8e8;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        
+        .header-actions a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        
+        .header-actions a:hover {
+            color: var(--white);
+        }
+        
+        .cart-badge {
+            position: relative;
+        }
+        
+        .cart-badge .badge {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: var(--secondary);
+            color: var(--dark-text);
+            font-size: 12px;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Category Navigation */
+        .category-nav {
+            background: var(--white);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .category-nav ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .category-nav li a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 20px;
+            color: var(--dark-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .category-nav li a:hover {
+            background: #f1f3f6;
+        }
+        
+        /* Main Content */
+        .main-content {
+            min-height: calc(100vh - 200px);
+            padding: 20px 0;
+        }
+        
+        /* Cards */
+        .kart-card {
+            background: var(--white);
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            transition: box-shadow 0.2s;
+        }
+        
+        .kart-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        
+        /* Product Card */
+        .product-card {
+            background: var(--white);
+            padding: 15px;
+            transition: transform 0.2s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .product-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark-text);
+            margin-bottom: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 8px;
+        }
+        
+        .rating-badge {
+            background: var(--primary);
+            color: var(--white);
+            padding: 2px 6px;
+            border-radius: 2px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        .rating-badge i {
+            font-size: 10px;
+        }
+        
+        .rating-count {
+            color: var(--gray-text);
+            font-size: 12px;
+        }
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .current-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+        
+        .original-price {
+            color: var(--gray-text);
+            text-decoration: line-through;
+            font-size: 14px;
+        }
+        
+        .discount-badge {
+            color: #388e3c;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .delivery-info {
+            color: var(--gray-text);
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        
+        /* Buttons */
+        .btn-primary-kart {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            font-weight: 500;
+            border-radius: 2px;
+            transition: background 0.2s;
+        }
+        
+        .btn-primary-kart:hover {
+            background: var(--primary-dark);
+            color: var(--white);
+        }
+        
+        .btn-secondary-kart {
+            background: var(--secondary);
+            color: var(--dark-text);
+            border: none;
+            padding: 10px 20px;
+            font-weight: 500;
+            border-radius: 2px;
+        }
+        
+        .btn-outline-kart {
+            border: 1px solid var(--gray-text);
+            background: transparent;
+            padding: 8px 16px;
+            border-radius: 2px;
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        .buildkart-footer {
+            background: #172337;
+            color: var(--white);
+            padding: 40px 0 20px;
+        }
+        
+        .footer-section h6 {
+            color: var(--gray-text);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-section ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 13px;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        /* Alerts */
+        .alert-kart {
+            padding: 12px 20px;
+            border-radius: 2px;
+            margin-bottom: 15px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-search {
+                max-width: 100%;
+            }
+            
+            .category-nav ul {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .product-image {
+                height: 150px;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Header -->
+    <header class="buildkart-header">
+        <div class="container-fluid px-4">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <a href="{% url 'home' %}" class="text-white text-decoration-none">
+                        <h4 style="margin: 0; font-weight: 700;">
+                            <span style="color: var(--secondary)">Build</span>Kart
+                        </h4>
+                    </a>
+                </div>
+                <div class="col">
+                    <form action="{% url 'search' %}" method="get" class="header-search d-flex">
+                        <input type="text" name="q" placeholder="Search for products, brands and more" value="{{ request.GET.q|default:'' }}">
+                        <button type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="col-auto header-actions">
+                    {% if user.is_authenticated %}
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+                                {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'dashboard' %}"><i class="fas fa-user"></i> My Account</a></li>
+                                <li><a class="dropdown-item" href="{% url 'orders' %}"><i class="fas fa-box"></i> My Orders</a></li>
+                                <li><a class="dropdown-item" href="{% url 'wishlist' %}"><i class="fas fa-heart"></i> Wishlist</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                        <a href="{% url 'orders' %}" class="d-none d-md-block">
+                            <i class="fas fa-box"></i> Orders
+                        </a>
+                        <a href="{% url 'wishlist' %}" class="d-none d-md-block">
+                            <i class="far fa-heart"></i> Wishlist
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-light btn-sm">Login</a>
+                        <a href="{% url 'register' %}" class="btn btn-warning btn-sm">Sign Up</a>
+                    {% endif %}
+                    <a href="{% url 'cart' %}" class="cart-badge">
+                        <i class="fas fa-shopping-cart"></i>
+                        {% if cart_count > 0 %}
+                        <span class="badge">{{ cart_count }}</span>
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Category Navigation -->
+    <nav class="category-nav">
+        <div class="container-fluid px-4">
+            <ul>
+                <li><a href="{% url 'product_list' %}"><i class="fas fa-th-large"></i> All Products</a></li>
+                {% for category in all_categories|slice:":8" %}
+                <li><a href="{% url 'product_list_by_category' category.slug %}"><i class="fas {{ category.icon|default:'fa-box' }}"></i> {{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Messages -->
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    <footer class="buildkart-footer">
+        <div class="container-fluid px-4">
+            <div class="row">
+                <div class="col-md-2 footer-section">
+                    <h6>ABOUT</h6>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">BuildKart Stories</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 footer-section">
+                    <h6>HELP</h6>
+                    <ul>
+                        <li><a href="#">Payments</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Cancellation & Returns</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 footer-section">
+                    <h6>SOCIAL</h6>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 footer-section">
+                    <h6>MAIL US</h6>
+                    <p style="font-size: 13px; color: #fff;">
+                        BuildKart Internet Private Limited,<br>
+                        Building No. 123, Construction Lane,<br>
+                        Mumbai, Maharashtra - 400001
+                    </p>
+                </div>
+                <div class="col-md-3 footer-section">
+                    <h6>REGISTERED OFFICE ADDRESS</h6>
+                    <p style="font-size: 13px; color: #fff;">
+                        BuildKart Internet Private Limited,<br>
+                        123 Business Park, Sector 1,<br>
+                        Navi Mumbai - 400701
+                    </p>
+                </div>
+            </div>
+            <div class="row mt-3 pt-3 border-top" style="border-color: #485460 !important;">
+                <div class="col-md-6">
+                    <p style="font-size: 13px; margin: 0;">© 2024 BuildKart. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/payment-method_69e7ec.svg" alt="Payment Methods" style="height: 30px;">
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Font Awesome JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

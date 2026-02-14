@@ -1,0 +1,69 @@
+{% extends 'constructionapp/base.html' %}
+
+{% block title %}Login - BuildMart{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i class="fas fa-hard-hat"></i>
+                    <span>BuildMart</span>
+                </div>
+                <h1>Welcome Back</h1>
+                <p>Login to your account to continue</p>
+            </div>
+            
+            <form method="POST" action="{% url 'login' %}" class="auth-form">
+                {% csrf_token %}
+                
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Invalid username or password. Please try again.
+                    </div>
+                {% endif %}
+                
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                </div>
+                
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" name="remember">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+            
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="{% url 'register' %}">Create one</a></p>
+            </div>
+            
+            <div class="auth-back">
+                <a href="{% url 'home' %}">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

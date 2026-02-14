@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}HOME PAGE{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <h1>Welcome to My Site</h1>
+    <p class="subtitle">Learn and Build Amazing Applications</p>
+</div>
+
+<div class="features-container">
+    <h2>Our Features</h2>
+    <ul class="feature-list">
+        <li>
+            <span class="icon">🐍</span>
+            <span class="text">Python</span>
+        </li>
+        <li>
+            <span class="icon">🌐</span>
+            <span class="text">Django</span>
+        </li>
+        <li>
+            <span class="icon">🔌</span>
+            <span class="text">Django REST Framework</span>
+        </li>
+        <li>
+            <span class="icon">⚡</span>
+            <span class="text">JavaScript</span>
+        </li>
+        <li>
+            <span class="icon">⚛️</span>
+            <span class="text">React</span>
+        </li>
+    </ul>
+</div>
+
+<div class="login-section">
+    <h2>Login</h2>
+    <form method="POST" class="login-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" name="username" placeholder="Username" required>
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+        <button type="submit" class="login-btn">Sign In</button>
+    </form>
+</div>
+{% endblock %}

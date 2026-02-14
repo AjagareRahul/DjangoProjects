@@ -1,0 +1,63 @@
+{% extends 'kartapp/base.html' %}
+
+{% block title %}Edit Profile - BuildKart{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4 py-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 mb-4">
+            <div class="kart-card p-3">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'dashboard' %}" class="text-decoration-none text-dark"><i class="fas fa-home me-2"></i> Dashboard</a></li>
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'orders' %}" class="text-decoration-none text-dark"><i class="fas fa-box me-2"></i> My Orders</a></li>
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'wishlist' %}" class="text-decoration-none text-dark"><i class="fas fa-heart me-2"></i> Wishlist</a></li>
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'addresses' %}" class="text-decoration-none text-dark"><i class="fas fa-map-marker-alt me-2"></i> Addresses</a></li>
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'profile' %}" class="text-decoration-none text-dark"><i class="fas fa-user-edit me-2"></i> Edit Profile</a></li>
+                    <li class="list-group-item border-0 ps-0"><a href="{% url 'logout' %}" class="text-decoration-none text-danger"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <div class="kart-card p-4">
+                <h4 class="mb-4">Edit Profile</h4>
+                
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">First Name</label>
+                            <input type="text" name="first_name" value="{{ user.first_name }}" class="form-control">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" name="last_name" value="{{ user.last_name }}" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" value="{{ user.email }}" class="form-control" disabled>
+                        <small class="text-muted">Email cannot be changed</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        <input type="text" name="phone" value="{{ profile.phone }}" class="form-control">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Alternate Phone</label>
+                        <input type="text" name="alternate_phone" value="{{ profile.alternate_phone }}" class="form-control">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

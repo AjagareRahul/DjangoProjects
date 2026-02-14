@@ -1,0 +1,248 @@
+/* BuildKart Custom Styles */
+
+/* Primary Colors */
+:root {
+    --buildkart-blue: #2874f0;
+    --buildkart-yellow: #ff9f00;
+    --buildkart-dark: #172337;
+    --buildkart-light: #f0f0f0;
+}
+
+/* Navbar */
+.navbar-custom {
+    background-color: var(--buildkart-blue);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-custom .navbar-brand {
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.navbar-custom .nav-link {
+    color: white !important;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--buildkart-blue) 0%, #1a5bc9 100%);
+    color: white;
+    padding: 60px 0;
+}
+
+.hero-section h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.hero-section .btn-warning {
+    background-color: var(--buildkart-yellow);
+    border: none;
+    color: #000;
+    font-weight: bold;
+}
+
+/* Category Cards */
+.category-card {
+    transition: transform 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.category-card .card-body {
+    text-align: center;
+    padding: 20px;
+}
+
+.category-icon {
+    font-size: 3rem;
+    color: var(--buildkart-blue);
+    margin-bottom: 10px;
+}
+
+/* Product Cards */
+.product-card {
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    transform: translateY(-3px);
+}
+
+.product-card .product-image {
+    height: 200px;
+    object-fit: contain;
+    padding: 20px;
+    background: #fff;
+}
+
+.product-card .product-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #212121;
+}
+
+.product-card .product-price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #212121;
+}
+
+.product-card .original-price {
+    text-decoration: line-through;
+    color: #878787;
+    font-size: 0.9rem;
+}
+
+.product-card .discount-badge {
+    background-color: var(--buildkart-yellow);
+    color: #000;
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    border-radius: 2px;
+}
+
+.product-card .rating {
+    color: var(--buildkart-yellow);
+    font-size: 0.9rem;
+}
+
+/* Buttons */
+.btn-primary-custom {
+    background-color: var(--buildkart-blue);
+    border: none;
+    color: white;
+}
+
+.btn-primary-custom:hover {
+    background-color: #1a5bc9;
+    color: white;
+}
+
+.btn-warning-custom {
+    background-color: var(--buildkart-yellow);
+    border: none;
+    color: #000;
+    font-weight: bold;
+}
+
+.btn-warning-custom:hover {
+    background-color: #e68a00;
+    color: #000;
+}
+
+/* Footer */
+.footer-custom {
+    background-color: var(--buildkart-dark);
+    color: white;
+    padding: 40px 0 20px;
+}
+
+.footer-custom h5 {
+    color: var(--buildkart-yellow);
+    margin-bottom: 15px;
+}
+
+.footer-custom a {
+    color: #ddd;
+    text-decoration: none;
+}
+
+.footer-custom a:hover {
+    color: white;
+}
+
+/* Forms */
+.form-control:focus {
+    border-color: var(--buildkart-blue);
+    box-shadow: 0 0 0 0.2rem rgba(40, 116, 240, 0.25);
+}
+
+/* Cart */
+.cart-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: white;
+}
+
+.cart-summary {
+    background: #f8f9fa;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+/* Dashboard */
+.dashboard-card {
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.dashboard-card .card-header {
+    background-color: var(--buildkart-blue);
+    color: white;
+    font-weight: bold;
+    border-radius: 8px 8px 0 0 !important;
+}
+
+/* Order Status */
+.order-status {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.order-status.pending {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+.order-status.confirmed {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.order-status.delivered {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.order-status.cancelled {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 1.8rem;
+    }
+    
+    .product-card .product-image {
+        height: 150px;
+    }
+}
