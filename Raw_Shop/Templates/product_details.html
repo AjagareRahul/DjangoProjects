@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} - Raw Shop</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0B2E33;
+            --primary-light: #1a4a52;
+            --secondary-color: #4F7C82;
+            --background-color: #B8E3E9;
+            --card-bg: #93B1B5;
+            --text-color: #0B2E33;
+            --text-light: #4a6b70;
+            --white: #ffffff;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            min-height: 100vh;
+        }
+        .top-navbar {
+            background: var(--secondary-color);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(11, 46, 51, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .brand-logo i {
+            font-size: 1.8rem;
+        }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.8rem;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .nav-menu a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        .nav-menu i {
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            color: var(--secondary-color);
+            transform: translateX(-5px);
+        }
+        .product-detail-container {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(11, 46, 51, 0.1);
+            overflow: hidden;
+        }
+        .product-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        .product-detail-image {
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+        .product-detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .product-detail-image .no-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--card-bg);
+        }
+        .product-detail-image .no-image i {
+            font-size: 5rem;
+            margin-bottom: 15px;
+        }
+        .product-detail-info {
+            padding: 40px;
+        }
+        .product-detail-info h1 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        .product-detail-info .price {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: baseline;
+        }
+        .product-detail-info .price .currency {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-right: 4px;
+            color: var(--secondary-color);
+        }
+        .product-detail-info .stock {
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            padding: 10px 18px;
+            border-radius: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        .product-detail-info .stock.in-stock {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .product-detail-info .stock.low-stock {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+        .product-detail-info .stock.out-of-stock {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .product-detail-info .stock i {
+            font-size: 1rem;
+        }
+        .product-detail-info .description {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        .product-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        .product-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        .product-meta-item i {
+            color: var(--secondary-color);
+        }
+        .product-detail-actions {
+            display: flex;
+            gap: 15px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 16px 35px;
+            text-decoration: none;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(11, 46, 51, 0.3);
+        }
+        .unavailable-msg {
+            color: #c62828;
+            font-weight: 600;
+            padding: 15px;
+            background: #f8d7da;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        .footer {
+            background: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+        @media (max-width: 768px) {
+            .product-detail-grid {
+                grid-template-columns: 1fr;
+            }
+            .product-detail-image {
+                min-height: 250px;
+            }
+            .product-detail-info {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-navbar">
+        <a href="{% url 'product_list' %}" class="brand-logo">
+            <i class="fas fa-store"></i>
+            <span>Raw Shop</span>
+        </a>
+
+        <div class="nav-menu">
+            <a href="{% url 'product_list' %}">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="{% url 'cart_detail' %}">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Cart</span>
+            </a>
+            <a href="{% url 'my_orders' %}">
+                <i class="fas fa-box"></i>
+                <span>Orders</span>
+            </a>
+            <a href="{% url 'profile' %}">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="{% url 'product_list' %}" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Products
+        </a>
+
+        <div class="product-detail-container">
+            <div class="product-detail-grid">
+                <div class="product-detail-image">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                    <div class="no-image">
+                        <i class="fas fa-image"></i>
+                        <p>No Image Available</p>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="product-detail-info">
+                    <h1>{{ product.name }}</h1>
+                    <p class="price"><span class="currency">₹</span>{{ product.price }}</p>
+                    <p class="stock {% if product.stock == 0 %}out-of-stock{% elif product.stock <= 5 %}low-stock{% else %}in-stock{% endif %}">
+                        {% if product.stock > 0 %}
+                        <i class="fas fa-check-circle"></i> In Stock ({{ product.stock }} available)
+                        {% else %}
+                        <i class="fas fa-times-circle"></i> Out of Stock
+                        {% endif %}
+                    </p>
+                    <p class="description">{{ product.description }}</p>
+                    
+                    {% if product.stock > 0 %}
+                    <div class="product-detail-actions">
+                        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">
+                            <i class="fas fa-cart-plus"></i> Add to Cart
+                        </a>
+                    </div>
+                    {% else %}
+                    <div class="unavailable-msg">
+                        <i class="fas fa-exclamation-circle"></i> This item is currently unavailable.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Raw Shop. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

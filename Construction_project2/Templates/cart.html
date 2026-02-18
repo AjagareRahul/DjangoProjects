@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart | BuildKart</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f1f3f6;
+        }
+        .cart-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+        }
+        .price {
+            font-weight: bold;
+            color: #2874f0;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-5">
+
+    <h3 class="mb-4 fw-bold">🛒 Your Cart</h3>
+
+    <div class="cart-card shadow-sm">
+
+        <table class="table align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Material</th>
+                    <th>Price</th>
+                    <th class="text-center">Quantity</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for item in cart.cartitem_set.all %}
+                <tr>
+                    <td class="fw-semibold">{{ item.material.name }}</td>
+
+                    <td class="price">₹ {{ item.material.price }}</td>
+
+                    <td class="text-center">
+                        <a href="{% url 'decrease_qty' item.id %}"
+                           class="btn btn-sm btn-outline-secondary qty-btn">−</a>
+
+                        <span class="mx-2 fw-bold">{{ item.quantity }}</span>
+
+                        <a href="{% url 'increase_qty' item.id %}"
+                           class="btn btn-sm btn-outline-secondary qty-btn">+</a>
+                    </td>
+
+                    <td class="price">₹ {{ item.total_price }}</td>
+
+                    <td>
+                        <a href="{% url 'remove_item' item.id %}"
+                           class="btn btn-sm btn-outline-danger">
+                            Remove
+                        </a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted py-4">
+                        Your cart is empty
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+            {% if cart.cartitem_set.exists %}
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-end fw-bold">Grand Total</td>
+                    <td colspan="2" class="price fs-5">
+                        ₹ {{ cart.grand_total }}
+                    </td>
+                </tr>
+            </tfoot>
+            {% endif %}
+        </table>
+
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="d-flex justify-content-between mt-4">
+        <a href="{% url 'home' %}" class="btn btn-outline-primary">
+            ← Continue Shopping
+        </a>
+
+        {% if cart.cartitem_set.exists %}
+        <a href="{% url 'checkout' %}" class="btn btn-success px-4">
+            Proceed to Checkout →
+        </a>
+        {% endif %}
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

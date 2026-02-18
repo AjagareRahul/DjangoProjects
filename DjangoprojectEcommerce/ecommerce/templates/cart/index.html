@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flipkart</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f1f3f6;
+        }
+        
+        /* Top stripe */
+        .top-stripe {
+            background-color: #2874f0;
+            height: 4px;
+        }
+        
+        /* Header */
+        .fk-header {
+            background-color: #2874f0;
+            padding: 10px 0;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+        
+        .fk-header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        /* Logo section */
+        .logo-section {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .logo {
+            display: flex;
+            flex-direction: column;
+            margin-right: 10px;
+        }
+        
+        .logo-text {
+            font-size: 22px;
+            font-style: italic;
+            color: #ffffff;
+            font-weight: bold;
+            letter-spacing: -1px;
+        }
+        
+        .logo-text span {
+            color: #ffe500;
+        }
+        
+        .logo-plus {
+            font-size: 10px;
+            color: #ffe500;
+            margin-left: 3px;
+        }
+        
+        /* Search bar */
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 2px;
+            font-size: 14px;
+        }
+        
+        .search-bar button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 44px;
+            border: none;
+            background-color: #ffffff;
+            color: #2874f0;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        /* Header actions */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        
+        .header-btn {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .header-btn:hover {
+            color: #ffffff;
+        }
+        
+        .become-seller {
+            font-size: 14px;
+        }
+        
+        .more-btn {
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .cart-btn {
+            background-color: #ffffff;
+            color: #2874f0;
+            padding: 5px 15px;
+            border-radius: 2px;
+            font-weight: 500;
+        }
+        
+        /* Navigation bar */
+        .nav-bar {
+            background-color: #ffffff;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            padding: 10px 0;
+        }
+        
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-item {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+        
+        /* Product grid */
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .product-card {
+            width: calc(20% - 16px);
+            min-width: 200px;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+        }
+        
+        .product-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+        
+        .product-title {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .product-title:hover {
+            color: #2874f0;
+        }
+        
+        .product-specs {
+            font-size: 12px;
+            color: #878787;
+            margin-bottom: 8px;
+        }
+        
+        .product-price-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .product-price {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .product-old-price {
+            font-size: 14px;
+            color: #878787;
+            text-decoration: line-through;
+        }
+        
+        .product-discount {
+            font-size: 12px;
+            color: #388e3c;
+            font-weight: 500;
+        }
+        
+        /* Buttons */
+        .btn-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 8px 0;
+            border: none;
+            border-radius: 2px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .btn-atc {
+            background-color: #ff9f00;
+            color: #ffffff;
+        }
+        
+        .btn-atc:hover {
+            background-color: #ff8f00;
+        }
+        
+        .btn-buy {
+            background-color: #2874f0;
+            color: #ffffff;
+        }
+        
+        .btn-buy:hover {
+            background-color: #1a5bd4;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top blue stripe -->
+    <div class="top-stripe"></div>
+    
+    <!-- Header -->
+    <header class="fk-header">
+        <div class="fk-header-content">
+            <div class="logo-section">
+                <div class="logo">
+                    <span class="logo-text">Flipkart<span>+</span></span>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for products, brands and more">
+                    <button>🔍</button>
+                </div>
+            </div>
+            <div class="header-actions">
+                <a href="{% url 'cart:view_cart' %}" class="header-btn cart-btn">🛒 Cart</a>
+                <a href="{% url 'logout' %}" class="header-btn">Logout</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <div class="nav-content">
+            <span style="color: #333; font-size: 14px;">Welcome, {{request.user}}</span>
+        </div>
+    </nav>
+    
+    <!-- Main content -->
+    <div class="container">
+        <div class="product-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <img src="{{product.image.url}}" class="product-image" alt="{{product.name}}"/>
+                <div class="product-title">{{product.name}}</div>
+                <div class="product-specs">{{product.description|truncatechars:40}}</div>
+                <div class="product-price-row">
+                    <span class="product-price">₹{{product.price}}</span>
+                </div>
+                <div class="btn-row">
+                    <a href="#" class="btn btn-buy">Buy Now</a>
+                    <a href="{% url 'cart:add_to_cart' product.id %}" class="btn btn-atc">ADD TO CART</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

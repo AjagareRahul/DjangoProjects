@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Summary - Flipkart</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f1f3f6;
+        }
+        
+        /* Top stripe */
+        .top-stripe {
+            background-color: #2874f0;
+            height: 4px;
+        }
+        
+        /* Header */
+        .fk-header {
+            background-color: #2874f0;
+            padding: 10px 0;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+        
+        .fk-header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-text {
+            font-size: 22px;
+            font-style: italic;
+            color: #ffffff;
+            font-weight: bold;
+            letter-spacing: -1px;
+        }
+        
+        .logo-text span {
+            color: #ffe500;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        
+        .header-btn {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+            display: flex;
+            gap: 20px;
+        }
+        
+        /* Order section */
+        .order-section {
+            flex: 2;
+            background-color: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+        
+        .order-header {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .order-header h2 {
+            font-size: 20px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        /* Order item */
+        .order-item {
+            display: flex;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .order-item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+        
+        .order-item-details {
+            flex: 1;
+            margin-left: 20px;
+        }
+        
+        .order-item-title {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .order-item-seller {
+            font-size: 12px;
+            color: #878787;
+            margin-bottom: 10px;
+        }
+        
+        .order-item-price {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .order-item-quantity {
+            font-size: 14px;
+            color: #878787;
+            margin-top: 5px;
+        }
+        
+        /* Order success message */
+        .order-success {
+            padding: 20px;
+            background-color: #e7f3e7;
+            border-radius: 4px;
+            margin: 20px;
+        }
+        
+        .order-success p {
+            color: #388e3c;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* Price section */
+        .price-section {
+            flex: 1;
+            background-color: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            padding: 20px;
+            height: fit-content;
+        }
+        
+        .price-header {
+            font-size: 16px;
+            color: #878787;
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .price-row.total {
+            border-top: 1px dashed #e0e0e0;
+            padding-top: 15px;
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .free-delivery {
+            color: #388e3c;
+        }
+        
+        /* Action buttons */
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 12px;
+            border-radius: 2px;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .btn-back {
+            background-color: #2874f0;
+            color: #ffffff;
+        }
+        
+        .btn-back:hover {
+            background-color: #1a5bd4;
+        }
+        
+        .btn-continue {
+            background-color: #878787;
+            color: #ffffff;
+        }
+        
+        /* Empty order */
+        .empty-order {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        
+        .empty-order p {
+            color: #333;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top stripe -->
+    <div class="top-stripe"></div>
+    
+    <!-- Header -->
+    <header class="fk-header">
+        <div class="fk-header-content">
+            <div class="logo">
+                <span class="logo-text">Flipkart<span>+</span></span>
+            </div>
+            <div class="header-actions">
+                <span style="color: #fff; font-size: 14px;">Hello, {{ request.user }}</span>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main content -->
+    <div class="container">
+        <!-- Order items -->
+        <div class="order-section">
+            <div class="order-header">
+                <h2>Order Summary ({{ cart_items|length }} items)</h2>
+            </div>
+            
+            {% for item in cart_items %}
+            <div class="order-item">
+                <img src="{{ item.product.image.url }}" class="order-item-image" alt="{{ item.product.name }}"/>
+                <div class="order-item-details">
+                    <div class="order-item-title">{{ item.product.name }}</div>
+                    <div class="order-item-seller">Seller: ShopKart</div>
+                    <div class="order-item-price">₹{{ item.product.price }}</div>
+                    <div class="order-item-quantity">Quantity: {{ item.quantity }}</div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-order">
+                <p>Your cart is empty</p>
+            </div>
+            {% endfor %}
+            
+            <div class="order-success">
+                <p>✓ Order confirmation will be sent to your email</p>
+            </div>
+        </div>
+        
+        <!-- Price section -->
+        <div class="price-section">
+            <div class="price-header">PRICE DETAILS</div>
+            
+            <div class="price-row">
+                <span>Price ({{ cart_items|length }} items)</span>
+                <span>₹{{ total_price }}</span>
+            </div>
+            
+            <div class="price-row">
+                <span>Delivery Charges</span>
+                <span class="free-delivery">FREE</span>
+            </div>
+            
+            <div class="price-row">
+                <span>GST (0%)</span>
+                <span>₹0</span>
+            </div>
+            
+            <div class="price-row total">
+                <span>Total Amount</span>
+                <span>₹{{ total_price }}</span>
+            </div>
+            
+            <div class="action-buttons">
+                <a href="{% url 'cart:view_cart' %}" class="btn btn-back">BACK TO CART</a>
+                <a href="{% url 'cart:product_list' %}" class="btn btn-continue">CONTINUE SHOPPING</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

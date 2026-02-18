@@ -3,69 +3,184 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Materials</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>BuildKart | Construction Materials</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body { background-color: #f1f3f6; }
+
+        .top-nav {
+            background-color: #2874f0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .brand {
+            font-weight: bold;
+            color: #ffc107;
+            font-size: 22px;
+        }
+
+        .search-box { width: 420px; }
+
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 5px;
+        }
+        .sidebar a:hover { background: #f1f3f6; }
+
+        .product-card {
+            background: #fff;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .price {
+            color: #2874f0;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .btn-cart {
+            background: #ff9f00;
+            border: none;
+            font-weight: 600;
+        }
+    </style>
 </head>
 
 <body>
 
-<header class="nav">
-    <div class="left">
-        <a href="/">Home</a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Projects</a>
-        <a href="#">Contact</a>
-      
-    </div>
-</header>
-<section class="hero">
-    <div class="hero-content">
-        <h1>Build Stronger with Trusted Construction Materials</h1>
-        <p>
-            Quality construction materials at the best prices —
-            delivered on time for every project.
-        </p>
-    </div>
-</section>
+<!-- 🔹 TOP NAVBAR -->
+<nav class="navbar top-nav navbar-expand-lg px-4">
+    <a class="navbar-brand brand" href="{% url 'home' %}">BuildKart</a>
 
-<h1>Material List</h1>
+    <form class="d-flex mx-auto">
+        <input class="form-control search-box" name="q"
+               placeholder="Search for products, brands and more">
+    </form>
 
+    {% if user.is_authenticated %}
+        <div class="d-flex align-items-center text-white">
+            <a href="{% url 'my_orders' %}" class="text-white me-3 text-decoration-none">
+                📦 Orders
+            </a>
+            <span class="text-white me-3 opacity-75">
+                ❤️ Wishlist
+            </span>
 
-<div class="container">
-    {% if item %}
-        {% for i in item %}
-            <div class="card">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                    {{ user.username }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'view_cart' %}">My Cart</a></li>
+                    <li><a class="dropdown-item" href="{% url 'my_orders' %}">My Orders</a></li>
+                    <li><hr></li>
+                    <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    {% else %}
+        <a href="{% url 'login' %}" class="btn btn-light">Login</a>
+    {% endif %}
+</nav>
 
-                <h2>{{ i.name }}</h2>
+<!-- 🔹 MAIN LAYOUT -->
+<div class="container-fluid mt-4">
+    <div class="row">
 
-                {% if i.image %}
-                    <img src="{{ i.image.url }}" alt="{{ i.name }}">
+        {% if user.is_authenticated %}
+        <!-- LEFT SIDEBAR -->
+        <div class="col-md-3 col-lg-2">
+            <div class="sidebar text-center">
+
+                {% if user.userprofile.profile_image %}
+                    <img src="{{ user.userprofile.profile_image.url }}"
+                         class="rounded-circle mb-2"
+                         width="80" height="80">
                 {% else %}
-                    <img src="{% static 'images/bricks.jpeg' %}" alt="Default">
+                    <img src="{% static 'images/user.png' %}"
+                         class="rounded-circle mb-2"
+                         width="80">
                 {% endif %}
 
-                <p class="price">₹ {{ i.price }}</p>
-                <p class="quantity">Quantity: {{ i.quantity }}</p>
-                <p>{{ i.description }}</p>
-                 <div class="actions">
-        <button class="btn cart">Add to Cart</button>
-        <button class="btn buy">Buy Now</button>
-    </div>
+                <h6 class="mt-2">{{ user.username }}</h6>
 
+                <hr>
 
+                <a href="{% url 'home' %}">🏠 Products</a>
+                <a href="{% url 'view_cart' %}">🛒 Cart</a>
+                <a href="{% url 'my_orders' %}">📦 My Orders</a>
+                <span class="text-muted d-block px-2 py-1">❤️ Wishlist (Soon)</span>
+                <a href="{% url 'profile' %}">👤 Edit Profile</a>
+                <a href="{% url 'logout' %}" class="text-danger">🚪 Logout</a>
             </div>
-        {% endfor %}
+        </div>
+        {% endif %}
 
-    {% endif %}
+        <!-- PRODUCTS SECTION -->
+        <div class="{% if user.is_authenticated %}col-md-9 col-lg-10{% else %}col-12{% endif %}">
+            <h4 class="mb-3 fw-bold">All Products</h4>
+
+            <div class="row">
+                {% for item in items %}
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="product-card p-3 h-100">
+
+                        {% if item.image %}
+                            <img src="{{ item.image.url }}" class="img-fluid mb-2"
+                                 style="height:160px; object-fit:cover;">
+                        {% else %}
+                            <img src="{% static 'images/bricks.jpeg' %}" class="img-fluid mb-2">
+                        {% endif %}
+
+                        <h6>{{ item.name }}</h6>
+                        <p class="text-muted small">
+                            {{ item.description|truncatechars:50 }}
+                        </p>
+
+                        <p class="price">₹ {{ item.price }}</p>
+
+                        <form method="post" action="{% url 'add_to_cart' item.id %}">
+                            {% csrf_token %}
+                            <div class="d-flex">
+                                <input type="number" name="quantity" value="1" min="1"
+                                       class="form-control me-2">
+                                <button class="btn btn-cart w-100">
+                                    Add
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                {% empty %}
+                    <p>No products found</p>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
 </div>
 
-
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ m.as_p }}
-    <button type="submit">Add Item</button>
-</form>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

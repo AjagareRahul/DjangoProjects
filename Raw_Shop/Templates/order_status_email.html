@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial;">
+
+<h2>Hello {{ user.username }},</h2>
+
+<p>Your order <strong>#{{ order.id }}</strong> status has been updated.</p>
+
+<h3>Status: {{ order.status }}</h3>
+
+<p>Total Amount: ₹{{ order.total_price }}</p>
+
+<p>
+{% if order.status == "Shipped" %}
+📦 Your order has been shipped and is on the way!
+{% elif order.status == "Delivered" %}
+✅ Your order has been delivered successfully.
+{% elif order.status == "Cancelled" %}
+❌ Your order has been cancelled.
+{% endif %}
+</p>
+
+<p>Thank you for shopping with us 🙏</p>
+
+</body>
+</html>

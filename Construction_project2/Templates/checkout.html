@@ -1,0 +1,27 @@
+<div class="container mt-4">
+  <h3>Checkout</h3>
+
+  <table class="table">
+    {% for item in cart.cartitem_set.all %}
+    <tr>
+      <td>{{ item.material.name }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>₹{{ item.total_price }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="2"><b>Total</b></td>
+      <td><b>₹{{ cart.grand_total }}</b></td>
+    </tr>
+  </table>
+
+  <form method="post">
+    {% csrf_token %}
+    <label>Delivery Address</label>
+    <textarea name="address" class="form-control" required></textarea>
+
+    <button type="submit" class="btn btn-success mt-3">
+      Place Order
+    </button>
+  </form>
+</div>

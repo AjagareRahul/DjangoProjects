@@ -1,0 +1,106 @@
+#Step 1. a.Create model Product
+         b.In setting add media url (for images upload)
+         c.Register in admin.py and run migrations and migrate command
+         d.Create a view and index.html(templates setting)
+           to show all products in index.html
+                 viewname-product_list
+                 index.html contains 2 <a> tags (buy now,Add to cart)
+
+        e.Create application level url
+          from . import views
+           app_name='cart'   #give app_name
+           urlpatterns = [
+          path('index/',views.product_list,name='product_list'),]
+
+Step2.a.Create a Model Cartitem (for users add cart item)
+        fields:
+        ->product=models.ForeignKey(Product,on_delete=models.CASCADE)
+         #relation with Product table
+
+        ->quantity=models.PositiveIntegerField(default=0)
+
+        ->user=models.ForeignKey(User,on_delete=models.CASCADE)
+          #relation with built-in User table
+          #from django.contrib.auth.models import User
+
+        -> date_added=models.DateTimeField(auto_now_add=True)
+        def __str__(self):
+             return f'{self.quantity} {self.product.name}'
+
+      b.Register in admin.py and run makemigrations and migrate command
+      c.In Index.html
+        <a href="{% url 'cart:add_to_cart' product.id  %}" class="buy-now-button">Add to cart</a>
+      d.Create a view add_to_cart with arguement product_id
+
+        def add_to_cart(request,product_id):
+          #select product with the specified id
+            product=Product.objects.get(id=product_id)
+
+          #Insert in Cartitem table if not exist and read if exist
+            cart_item=CartItem.objects.get_or_create(product=product,user=request.user)
+
+          #Adding total quantity
+           cart_item[0].quantity+=1
+
+          #Saving/Insert in Cartitem
+           cart_item[0].save()
+
+          #Redirecting to view_cart view
+           return redirect("cart:view_cart")
+
+      e.Create view_cart view and cart.html file to display all items and total price added by specific user
+         In view.py
+         def view_cart(request):
+            cart_items=CartItem.objects.filter(user=request.user)
+            total_price=sum(item.product.price * item.quantity for item in cart_items)
+            return render(request,'cart/cart.html',{'cart_items':cart_items,'total_price':total_price})
+
+         cart.html
+          <body>
+           <div>
+            <p>Hello,{{request.user}}</p>
+             {% for item in cart_items %}
+                 <div class="product-item">
+                 <img src="{{item.product.image.url}}" alt="{{item.product.name}}" width="200" height="150"/>
+                 <p>{{ item.product.name }} {{ item.quantity }}</p>
+                 <p>Price:Rs.{{ item.product.price}}</p>
+                 <a href="{% url 'cart:remove_from_cart' item.id %}">Remove</a>
+                 </div>
+             {% empty %}py
+               <p>Your cart is empty</p>
+             {% endfor %}
+           </div>
+          <p>Total price:Rs.{{ total_price }}</p>
+          <a href="{% url 'cart:product_list'  %}">Continue shopping</a>
+      </body>
+
+      f.In cart/url
+        urlpatterns = [
+          path('index/',views.product_list,name='product_list'),]
+           path('add/<product_id>/',views.add_to_cart,name="add_to_cart"),
+           path('cart/',views.view_cart,name='view_cart'),
+           path('remove/<int:item_id>/',views.remove_from_cart,name='remove_from_cart')
+           ]
+
+      g.To remove item from cart
+        def remove_from_cart(request,item_id):
+           cart_item=CartItem.objects.get(id=item_id)
+           cart_item.delete()
+           return redirect('cart:view_cart')
+
+For login logout
+1.For user authentication we have built -in module django.contrib
+2.django.contrib provides predifined use for user login and logout
+3.django.contrib.auth provides predifined views like authenticate
+login,logout
+4.django.contrib.uth.model provides predifined model ie user 
+ (we can see in admin interface)
+
+We need 2 views for user login interface other
+than admin login interface
+a.login_page
+b.register_page
+
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.models import User
+from django.contrib import messages

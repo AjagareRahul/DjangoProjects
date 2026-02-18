@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Raw Shop</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0B2E33;
+            --primary-light: #1a4a52;
+            --secondary-color: #4F7C82;
+            --background-color: #B8E3E9;
+            --card-bg: #93B1B5;
+            --text-color: #0B2E33;
+            --text-light: #4a6b70;
+            --white: #ffffff;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            min-height: 100vh;
+        }
+        .top-navbar {
+            background: var(--secondary-color);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(11, 46, 51, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .brand-logo i {
+            font-size: 1.8rem;
+        }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.8rem;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .nav-menu a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        .nav-menu i {
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            color: var(--secondary-color);
+            transform: translateX(-5px);
+        }
+        .checkout-container {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(11, 46, 51, 0.1);
+            padding: 40px;
+        }
+        .checkout-container h1 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+        .checkout-summary {
+            background: var(--secondary-color);
+            color: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .checkout-summary h3 {
+            font-size: 1.1rem;
+        }
+        .checkout-summary .total {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--card-bg);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--card-bg);
+        }
+        .btn {
+            display: inline-block;
+            padding: 16px 30px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(11, 46, 51, 0.3);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .checkout-container {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-navbar">
+        <a href="{% url 'product_list' %}" class="brand-logo">
+            <i class="fas fa-store"></i>
+            <span>Raw Shop</span>
+        </a>
+
+        <div class="nav-menu">
+            <a href="{% url 'product_list' %}">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="{% url 'cart_detail' %}">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Cart</span>
+            </a>
+            <a href="{% url 'my_orders' %}">
+                <i class="fas fa-box"></i>
+                <span>Orders</span>
+            </a>
+            <a href="{% url 'profile' %}">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="{% url 'cart_detail' %}" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Cart
+        </a>
+
+        <div class="checkout-container">
+            <h1>🛒 Checkout</h1>
+
+            <div class="checkout-summary">
+                <h3><i class="fas fa-receipt"></i> Order Total</h3>
+                <p class="total">₹{{ total_price }}</p>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="id_full_name"><i class="fas fa-user"></i> Full Name</label>
+                    <input type="text" name="full_name" id="id_full_name" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_phone"><i class="fas fa-phone"></i> Phone Number</label>
+                    <input type="tel" name="phone" id="id_phone" required placeholder="Enter your phone number">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_address"><i class="fas fa-map-marker-alt"></i> Address</label>
+                    <textarea name="address" id="id_address" rows="3" required placeholder="Enter your delivery address"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="id_city"><i class="fas fa-city"></i> City</label>
+                        <input type="text" name="city" id="id_city" required placeholder="Enter your city">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_pincode"><i class="fas fa-pin"></i> Pincode</label>
+                        <input type="text" name="pincode" id="id_pincode" required placeholder="Enter your pincode">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">
+                    <i class="fas fa-check-circle"></i> Place Order
+                </button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
