@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load portfolio_tags %}
+
+{% block title %}About - Ajagare Rahul{% endblock %}
+{% block meta_description %}Learn more about Ajagare Rahul, a Python and Django developer.{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-dark text-white py-5">
+    <div class="container py-5">
+        <h1 class="display-4" data-aos="fade-up">About Me</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'portfolio:home' %}" class="text-white">Home</a></li>
+                <li class="breadcrumb-item active text-warning" aria-current="page">About</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-5" data-aos="fade-right">
+                <div class="position-relative">
+                    <div class="about-image-container">
+                        {% if site_info and site_info.profile_image %}
+                        <a href="{% url 'portfolio:profile' %}">
+                        <img src="{{ site_info.profile_image.url }}" alt="Ajagare Rahul" class="img-fluid rounded" style="border: 5px solid #ffc107; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">
+                        </a>
+                        {% else %}
+                        <a href="{% url 'portfolio:profile' %}">
+                        <div class="about-placeholder" style="transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">
+                            <i class="fas fa-user fa-8x text-warning"></i>
+                        </div>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7" data-aos="fade-left">
+                <h2 class="mb-4">Who Am I?</h2>
+                <p class="lead">
+                    I'm <strong>Ajagare Rahul</strong>, a passionate Python & Django Developer with expertise in building modern web applications.
+                </p>
+                <p class="text-muted">
+                    I have experience in developing scalable web applications using Python and Django framework. 
+                    My passion lies in creating efficient, user-friendly, and maintainable code. I constantly 
+                    stay updated with the latest technologies and best practices in web development.
+                </p>
+                <p class="text-muted">
+                    When I'm not coding, you can find me exploring new technologies, contributing to open-source 
+                    projects, or sharing knowledge with the developer community.
+                </p>
+                
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-check-circle text-warning me-3 fa-2x"></i>
+                            <div>
+                                <h6 class="mb-0">Clean Code</h6>
+                                <small class="text-muted">Maintainable & Scalable</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-clock text-warning me-3 fa-2x"></i>
+                            <div>
+                                <h6 class="mb-0">On Time Delivery</h6>
+                                <small class="text-muted">Professional Approach</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-users text-warning me-3 fa-2x"></i>
+                            <div>
+                                <h6 class="mb-0">Team Player</h6>
+                                <small class="text-muted">Collaborative Skills</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-lightbulb text-warning me-3 fa-2x"></i>
+                            <div>
+                                <h6 class="mb-0">Problem Solver</h6>
+                                <small class="text-muted">Analytical Thinking</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <a href="{% url 'portfolio:contact' %}" class="btn btn-warning me-2">
+                        <i class="fas fa-envelope me-2"></i>Contact Me
+                    </a>
+                    <a href="{% url 'portfolio:projects' %}" class="btn btn-outline-dark">
+                        <i class="fas fa-briefcase me-2"></i>View Projects
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Experience Section -->
+<section class="py-5 bg-light">
+    <div class="container py-5">
+        <h2 class="section-title" data-aos="fade-up">Work Experience</h2>
+        <div class="timeline">
+            {% if experiences %}
+                {% for experience in experiences %}
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <h4 class="mb-1">{{ experience.position }}</h4>
+                                    <h5 class="text-warning mb-0">{{ experience.company_name }}</h5>
+                                </div>
+                                <span class="badge bg-dark">
+                                    {{ experience.start_date|date:"M Y" }} - {% if experience.is_current %}Present{% else %}{{ experience.end_date|date:"M Y" }}{% endif %}
+                                </span>
+                            </div>
+                            {% if experience.location %}
+                            <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-1"></i> {{ experience.location }}</p>
+                            {% endif %}
+                            <p class="mb-0">{{ experience.description }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-briefcase fa-4x text-muted mb-3"></i>
+                    <h4>No experience yet</h4>
+                    <p class="text-muted">Work experience will be displayed here.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Education Section -->
+<section class="py-5">
+    <div class="container py-5">
+        <h2 class="section-title" data-aos="fade-up">Education</h2>
+        <div class="row g-4">
+            {% if educations %}
+                {% for education in educations %}
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <h4 class="mb-1">{{ education.degree }}</h4>
+                                    <h5 class="text-warning">{{ education.institution }}</h5>
+                                </div>
+                                <span class="badge bg-dark">
+                                    {{ education.start_date|date:"Y" }} - {% if education.is_current %}Present{% else %}{{ education.end_date|date:"Y" }}{% endif %}
+                                </span>
+                            </div>
+                            <p class="text-muted mb-2">{{ education.field_of_study }}</p>
+                            {% if education.grade %}
+                            <p class="mb-0"><strong>Grade:</strong> {{ education.grade }}</p>
+                            {% endif %}
+                            {% if education.description %}
+                            <p class="mb-0 mt-2">{{ education.description }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <i class="fas fa-graduation-cap fa-4x text-muted mb-3"></i>
+                    <h4>Education details coming soon</h4>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5 bg-warning">
+    <div class="container py-4 text-center">
+        <h2 class="text-dark mb-3">Want to know more about me?</h2>
+        <p class="text-dark mb-4">Let's connect and discuss your project.</p>
+        <a href="{% url 'portfolio:contact' %}" class="btn btn-dark btn-lg">
+            <i class="fas fa-envelope me-2"></i>Get In Touch
+        </a>
+    </div>
+</section>
+{% endblock %}

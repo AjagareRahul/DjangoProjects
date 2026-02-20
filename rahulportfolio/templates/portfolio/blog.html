@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load portfolio_tags %}
+
+{% block title %}Blog - Ajagare Rahul{% endblock %}
+
+{% block content %}
+<section class="page-header bg-dark text-white py-5">
+    <div class="container py-5">
+        <h1 class="display-4" data-aos="fade-up">Blog</h1>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row g-4">
+            {% for post in posts %}
+            <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                <div class="card blog-card h-100 border-0 shadow-sm">
+                    {% if post.image %}
+                    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-blog fa-3x text-white"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <span class="badge bg-warning text-dark mb-2">{{ post.category }}</span>
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text text-muted">{{ post.excerpt }}</p>
+                        <a href="{% url 'portfolio:blog_detail' post.slug %}" class="btn btn-sm btn-outline-primary">Read More</a>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <small class="text-muted">{{ post.published_at|time_ago }} · {{ post.views }} views</small>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-pen-fancy fa-4x text-muted mb-3"></i>
+                <h3>No blog posts yet</h3>
+                <p class="text-muted">Check back soon for articles!</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% if posts.has_other_pages %}
+        <nav class="mt-5">
+            <ul class="pagination justify-content-center">
+                {% if posts.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ posts.previous_page_number }}">&laquo;</a></li>
+                {% endif %}
+                <li class="page-item active"><span class="page-link">{{ posts.number }} / {{ posts.paginator.num_pages }}</span></li>
+                {% if posts.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ posts.next_page_number }}">&raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

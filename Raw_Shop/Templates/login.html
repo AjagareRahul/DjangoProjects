@@ -1,202 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Raw Shop</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #0B2E33;
-            --primary-light: #1a4a52;
-            --secondary-color: #4F7C82;
-            --background-color: #B8E3E9;
-            --card-bg: #93B1B5;
-            --text-color: #0B2E33;
-            --text-light: #4a6b70;
-            --white: #ffffff;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--secondary-color);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .auth-container {
-            background: var(--white);
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(11, 46, 51, 0.3);
-            overflow: hidden;
-            width: 100%;
-            max-width: 450px;
-        }
-        .auth-header {
-            background: var(--secondary-color);
-            color: var(--white);
-            padding: 40px 30px;
-            text-align: center;
-        }
-        .auth-header h1 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-        .auth-header p {
-            opacity: 0.9;
-            font-size: 0.95rem;
-        }
-        .auth-header i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-        .auth-body {
-            padding: 40px 30px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-color);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 14px 15px;
-            border: 2px solid var(--card-bg);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-        }
-        .btn-primary {
-            width: 100%;
-            padding: 15px;
-            background: var(--primary-color);
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(11, 46, 51, 0.3);
-        }
-        .auth-links {
-            text-align: center;
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid #eee;
-        }
-        .auth-links p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-        }
-        .auth-links a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .auth-links a:hover {
-            text-decoration: underline;
-        }
-        .error-messages {
-            background: #fee;
-            border: 1px solid #fcc;
-            color: #c33;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
-        .success-messages {
-            background: #efe;
-            border: 1px solid #cfc;
-            color: #3c3;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
-        .brand-logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .brand-logo a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <div class="auth-container">
-        <div class="auth-header">
-            <i class="fas fa-sign-in-alt"></i>
-            <h1>Welcome Back</h1>
-            <p>Login to your Raw Shop account</p>
-        </div>
-        
-        <div class="auth-body">
-            <div class="brand-logo">
-                <a href="{% url 'home' %}"><i class="fas fa-store"></i> Raw Shop</a>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login - Raw Shop{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="login-page">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <i class="fas fa-sign-in-alt"></i>
+                <h1>Welcome Back</h1>
+                <p>Login to your Raw Shop account</p>
             </div>
             
-            {% if messages %}
-                {% for message in messages %}
-                    {% if message.tags == 'success' %}
-                        <div class="success-messages">{{ message }}</div>
-                    {% else %}
-                        <div class="error-messages">{{ message }}</div>
+            <div class="login-body">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="messages">
+                            <div class="message {{ message.tags }}">{{ message }}</div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <form method="POST" class="login-form">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="id_username" class="form-label"><i class="fas fa-user"></i> Username</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="error-message">
+                                {% for error in form.username.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="id_password" class="form-label"><i class="fas fa-lock"></i> Password</label>
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                            <div class="error-message">
+                                {% for error in form.password.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    {% if form.non_field_errors %}
+                        <div class="messages">
+                            <div class="message error">
+                                {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
                     {% endif %}
-                {% endfor %}
-            {% endif %}
-            
-            {% if form.errors %}
-                <div class="error-messages">
-                    <p>Invalid username or password. Please try again.</p>
-                </div>
-            {% endif %}
-            
-            <form method="POST">
-                {% csrf_token %}
+                    
+                    <button type="submit" class="btn btn-login">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </form>
                 
-                <div class="form-group">
-                    <label for="id_username"><i class="fas fa-user"></i> Username</label>
-                    <input type="text" name="username" id="id_username" placeholder="Enter your username" required>
+                <div class="login-footer">
+                    <p>Don't have an account? <a href="{% url 'sing_up' %}">Sign up here</a></p>
                 </div>
-                
-                <div class="form-group">
-                    <label for="id_password"><i class="fas fa-lock"></i> Password</label>
-                    <input type="password" name="password" id="id_password" placeholder="Enter your password" required>
-                </div>
-                
-                <button type="submit" class="btn-primary">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-            </form>
-            
-            <div class="auth-links">
-                <p>Don't have an account? <a href="{% url 'sing_up' %}">Sign up here</a></p>
             </div>
         </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

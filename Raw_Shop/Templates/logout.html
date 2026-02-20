@@ -1,6 +1,22 @@
-<h2>Logout</h2>
-<form method="post">
-    {% csrf_token %}
-    <p>Are you sure you want to log out?</p>
-    <button type="submit" class="btn btn-primary">Logout</button>
-</form>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Logout - Raw Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="logout-container">
+        <h1>👋 Logout</h1>
+        <p>Are you sure you want to log out?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+            <a href="{% url 'product_list' %}" class="btn btn-outline">
+                <i class="fas fa-store"></i> Cancel
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}

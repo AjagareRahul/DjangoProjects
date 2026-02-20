@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load portfolio_tags %}
+
+{% block title %}Ajagare Rahul - Python & Django Developer | Home{% endblock %}
+{% block meta_description %}Professional Python & Django Developer portfolio showcasing web development projects, skills, and services.{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.5rem;
+        color: #6c757d;
+        margin-bottom: 2rem;
+    }
+    
+    .typing-text {
+        color: #ffc107;
+        font-weight: 600;
+    }
+    
+    .feature-box {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .feature-box:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .section-title {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 3rem;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: #ffc107;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container hero-content">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="text-warning mb-3 d-block" data-aos="fade-up">Hello, I'm</span>
+                <h1 class="hero-title text-white mb-3" data-aos="fade-up" data-aos-delay="100">
+                    Ajagare Rahul
+                </h1>
+                <h2 class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
+                    <span class="typing-text">Python & Django Developer</span>
+                </h2>
+                <p class="text-white-50 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    I build modern, scalable, and user-friendly web applications using Python and Django. 
+                    With expertise in full-stack development, I transform ideas into reality.
+                </p>
+                <div data-aos="fade-up" data-aos-delay="400">
+                    <a href="{% url 'portfolio:projects' %}" class="btn btn-warning btn-lg me-2 mb-2">
+                        <i class="fas fa-briefcase me-2"></i>View Projects
+                    </a>
+                    <a href="{% url 'portfolio:contact' %}" class="btn btn-outline-light btn-lg mb-2">
+                        <i class="fas fa-envelope me-2"></i>Contact Me
+                    </a>
+                </div>
+                <!-- Social Links -->
+                <div class="mt-4" data-aos="fade-up" data-aos-delay="500">
+                    {% if social_links %}
+                        {% for link in social_links|slice:":4" %}
+                            <a href="{{ link.url }}" target="_blank" class="btn btn-outline-light btn-sm rounded-circle me-2">
+                                <i class="{% get_social_icon link.platform %}"></i>
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <a href="https://github.com" target="_blank" class="btn btn-outline-light btn-sm rounded-circle me-2">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" class="btn btn-outline-light btn-sm rounded-circle me-2">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="btn btn-outline-light btn-sm rounded-circle me-2">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-5 text-center" data-aos="fade-left" data-aos-delay="300">
+                <div class="position-relative">
+                    <div class="profile-image-container">
+                        {% if site_info and site_info.profile_image %}
+                        <a href="{% url 'portfolio:profile' %}">
+                        <img src="{{ site_info.profile_image.url }}" alt="Ajagare Rahul" class="rounded-circle" style="width: 300px; height: 300px; object-fit: cover; border: 5px solid #ffc107;">
+                        </a>
+                        {% else %}
+                        <a href="{% url 'portfolio:profile' %}">
+                        <div class="profile-placeholder">
+                            <i class="fas fa-user fa-7x text-warning"></i>
+                        </div>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section class="py-5 bg-light">
+    <div class="container py-5">
+        <h2 class="section-title" data-aos="fade-up">My Skills</h2>
+        <div class="row g-4">
+            {% if backend_skills %}
+                {% for skill in backend_skills|slice:":4" %}
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                    <div class="card feature-box h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="{% get_skill_icon skill.name %} fa-3x text-primary mb-3"></i>
+                            <h5>{{ skill.name }}</h5>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: {{ skill.proficiency }}%">
+                                    {{ skill.proficiency }}%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-md-6 col-lg-3" data-aos="fade-up">
+                    <div class="card feature-box h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fab fa-python fa-3x text-primary mb-3"></i>
+                            <h5>Python</h5>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 95%">95%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card feature-box h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-code fa-3x text-success mb-3"></i>
+                            <h5>Django</h5>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 90%">90%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card feature-box h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fab fa-js fa-3x text-warning mb-3"></i>
+                            <h5>JavaScript</h5>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 85%">85%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card feature-box h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-database fa-3x text-info mb-3"></i>
+                            <h5>SQL</h5>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 80%">80%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'portfolio:skills' %}" class="btn btn-outline-dark">View All Skills</a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects Section -->
+<section class="py-5">
+    <div class="container py-5">
+        <h2 class="section-title" data-aos="fade-up">Featured Projects</h2>
+        <div class="row g-4">
+            {% if featured_projects %}
+                {% for project in featured_projects %}
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                    <div class="card project-card h-100 border-0 shadow-sm">
+                        {% if project.image %}
+                        <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                        {% else %}
+                        <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-project-diagram fa-4x text-white"></i>
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ project.title }}</h5>
+                            <p class="card-text text-muted">{{ project.short_description }}</p>
+                            <div class="mb-3">
+                                {{ project.technology_used|format_technology|safe }}
+                            </div>
+                            <a href="{% url 'portfolio:project_detail' project.slug %}" class="btn btn-sm btn-outline-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <i class="fas fa-folder-open fa-4x text-muted mb-3"></i>
+                    <h4>No projects yet</h4>
+                    <p class="text-muted">Projects will be displayed here once added.</p>
+                </div>
+            {% endif %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'portfolio:projects' %}" class="btn btn-warning">View All Projects</a>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+{% if services %}
+<section class="py-5 bg-light">
+    <div class="container py-5">
+        <h2 class="section-title" data-aos="fade-up">My Services</h2>
+        <div class="row g-4">
+            {% for service in services|slice:":6" %}
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                <div class="card feature-box h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="service-icon mb-3">
+                            <i class="{{ service.icon_class }} fa-3x text-warning"></i>
+                        </div>
+                        <h5>{{ service.title }}</h5>
+                        <p class="text-muted">{{ service.description|truncatewords:20 }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Testimonials Section -->
+{% if testimonials %}
+<section class="py-5">
+    <div class="container py-5">
+        <h2 class="section-title" data-aos="fade-up">Testimonials</h2>
+        <div class="row g-4">
+            {% for testimonial in testimonials %}
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            {{ testimonial.rating|star_rating|safe }}
+                        </div>
+                        <p class="card-text">"{{ testimonial.testimonial }}"</p>
+                        <hr>
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                {% if testimonial.client_image %}
+                                <img src="{{ testimonial.client_image.url }}" alt="{{ testimonial.client_name }}" class="rounded-circle" width="50" height="50">
+                                {% else %}
+                                <div class="rounded-circle bg-warning d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <i class="fas fa-user text-dark"></i>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-0">{{ testimonial.client_name }}</h6>
+                                <small class="text-muted">{{ testimonial.client_title }}{% if testimonial.client_company %}, {{ testimonial.client_company }}{% endif %}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Call to Action -->
+<section class="py-5 bg-warning">
+    <div class="container py-4 text-center">
+        <h2 class="text-dark mb-3" data-aos="fade-up">Let's Work Together!</h2>
+        <p class="text-dark mb-4" data-aos="fade-up" data-aos-delay="100">
+            Have a project in mind? I'd love to hear about it.
+        </p>
+        <a href="{% url 'portfolio:contact' %}" class="btn btn-dark btn-lg" data-aos="fade-up" data-aos-delay="200">
+            <i class="fas fa-envelope me-2"></i>Get In Touch
+        </a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+</script>
+{% endblock %}

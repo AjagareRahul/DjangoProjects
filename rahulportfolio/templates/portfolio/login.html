@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login - Ajagare Rahul{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        padding: 2rem 0;
+    }
+    .auth-card {
+        max-width: 450px;
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card auth-card shadow-lg">
+                    <div class="card-body p-5">
+                        <div class="text-center mb-4">
+                            <a href="{% url 'portfolio:home' %}" class="text-decoration-none">
+                                <h3 class="text-dark">Ajagare Rahul</h3>
+                            </a>
+                            <p class="text-muted">Sign in to your account</p>
+                        </div>
+                        
+                        <form method="POST" action="{% url 'portfolio:login' %}">
+                            {% csrf_token %}
+                            
+                            {% if form.errors %}
+                            <div class="alert alert-danger">
+                                <strong>Error!</strong> Invalid username or password.
+                            </div>
+                            {% endif %}
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                                {{ form.username }}
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.password.id_for_label }}" class="form-label">Password</label>
+                                {{ form.password }}
+                            </div>
+                            
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-warning btn-lg">Sign In</button>
+                            </div>
+                        </form>
+                        
+                        <div class="text-center mt-4">
+                            <p class="text-muted">Don't have an account? 
+                                <a href="{% url 'portfolio:register' %}" class="text-warning text-decoration-none">Sign up</a>
+                            </p>
+                            <p class="text-muted">
+                                <a href="{% url 'password_reset' %}" class="text-muted text-decoration-none">Forgot your password?</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

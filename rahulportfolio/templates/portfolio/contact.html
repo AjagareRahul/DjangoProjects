@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load portfolio_tags %}
+
+{% block title %}Contact - Ajagare Rahul{% endblock %}
+{% block meta_description %}Get in touch with Ajagare Rahul for Python & Django development projects.{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-dark text-white py-5">
+    <div class="container py-5">
+        <h1 class="display-4" data-aos="fade-up">Contact Me</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'portfolio:home' %}" class="text-white">Home</a></li>
+                <li class="breadcrumb-item active text-warning" aria-current="page">Contact</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row g-5">
+            <!-- Contact Info -->
+            <div class="col-lg-5" data-aos="fade-right">
+                <h2 class="mb-4">Get In Touch</h2>
+                <p class="text-muted mb-4">
+                    Have a question or want to work together? Feel free to reach out to me using the form or contact information below.
+                </p>
+                
+                <div class="contact-info">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="contact-icon bg-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                            <i class="fas fa-envelope text-dark"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">Email</h6>
+                            <p class="mb-0 text-muted">ajagare.rahul@example.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="contact-icon bg-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                            <i class="fas fa-phone text-dark"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">Phone</h6>
+                            <p class="mb-0 text-muted">+91 XXXXXXXXXX</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="contact-icon bg-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                            <i class="fas fa-map-marker-alt text-dark"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">Location</h6>
+                            <p class="mb-0 text-muted">India</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Social Links -->
+                <div class="mt-4">
+                    <h5 class="mb-3">Follow Me</h5>
+                    {% if social_links %}
+                        {% for link in social_links %}
+                            <a href="{{ link.url }}" target="_blank" class="btn btn-outline-dark btn-sm rounded-circle me-2">
+                                <i class="{% get_social_icon link.platform %}"></i>
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <a href="https://github.com" target="_blank" class="btn btn-outline-dark btn-sm rounded-circle me-2">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" class="btn btn-outline-dark btn-sm rounded-circle me-2">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="btn btn-outline-dark btn-sm rounded-circle me-2">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Contact Form -->
+            <div class="col-lg-7" data-aos="fade-left">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-5">
+                        <h3 class="mb-4">Send a Message</h3>
+                        <form method="POST" action="{% url 'portfolio:contact' %}">
+                            {% csrf_token %}
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="{{ form.name.id_for_label }}" class="form-label">Name</label>
+                                    {{ form.name }}
+                                    {% if form.name.errors %}
+                                        <div class="text-danger small">{{ form.name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                                    {{ form.email }}
+                                    {% if form.email.errors %}
+                                        <div class="text-danger small">{{ form.email.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="{{ form.phone.id_for_label }}" class="form-label">Phone (Optional)</label>
+                                    {{ form.phone }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="{{ form.subject.id_for_label }}" class="form-label">Subject</label>
+                                    {{ form.subject }}
+                                    {% if form.subject.errors %}
+                                        <div class="text-danger small">{{ form.subject.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-12">
+                                    <label for="{{ form.message.id_for_label }}" class="form-label">Message</label>
+                                    {{ form.message }}
+                                    {% if form.message.errors %}
+                                        <div class="text-danger small">{{ form.message.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-warning btn-lg">
+                                        <i class="fas fa-paper-plane me-2"></i>Send Message
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

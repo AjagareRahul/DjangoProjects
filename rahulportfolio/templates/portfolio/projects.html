@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load portfolio_tags %}
+
+{% block title %}Projects - Ajagare Rahul{% endblock %}
+{% block meta_description %}View my portfolio of web development projects built with Python, Django, and modern technologies.{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-dark text-white py-5">
+    <div class="container py-5">
+        <h1 class="display-4" data-aos="fade-up">My Projects</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'portfolio:home' %}" class="text-white">Home</a></li>
+                <li class="breadcrumb-item active text-warning" aria-current="page">Projects</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row g-4">
+            {% if projects %}
+                {% for project in projects %}
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+                    <div class="card project-card h-100 border-0 shadow-sm">
+                        {% if project.image %}
+                        <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-project-diagram fa-4x text-white"></i>
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            {% if project.featured %}
+                            <span class="badge bg-warning text-dark mb-2">Featured</span>
+                            {% endif %}
+                            <h5 class="card-title">{{ project.title }}</h5>
+                            <p class="card-text text-muted">{{ project.short_description }}</p>
+                            <div class="mb-3">
+                                {{ project.technology_used|format_technology|safe }}
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'portfolio:project_detail' project.slug %}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-eye me-1"></i> View
+                                </a>
+                                {% if project.project_url %}
+                                <a href="{{ project.project_url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-external-link-alt me-1"></i> Live
+                                </a>
+                                {% endif %}
+                                {% if project.source_code_url %}
+                                <a href="{{ project.source_code_url }}" target="_blank" class="btn btn-sm btn-outline-dark">
+                                    <i class="fab fa-github me-1"></i> Code
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <small class="text-muted">{{ project.created_at|time_ago }}</small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <i class="fas fa-folder-open fa-5x text-muted mb-4"></i>
+                    <h3>No projects yet</h3>
+                    <p class="text-muted">Projects will be displayed here. Check back soon!</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Pagination -->
+        {% if projects.has_other_pages %}
+        <nav class="mt-5" aria-label="Projects pagination">
+            <ul class="pagination justify-content-center">
+                {% if projects.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ projects.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+                
+                {% for num in projects.paginator.page_range %}
+                    {% if projects.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% elif num > projects.number|add:'-3' and num < projects.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if projects.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ projects.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5 bg-warning">
+    <div class="container py-4 text-center">
+        <h2 class="text-dark mb-3">Have a Project in Mind?</h2>
+        <p class="text-dark mb-4">Let's discuss how I can help bring your ideas to life.</p>
+        <a href="{% url 'portfolio:contact' %}" class="btn btn-dark btn-lg">
+            <i class="fas fa-envelope me-2"></i>Get In Touch
+        </a>
+    </div>
+</section>
+{% endblock %}

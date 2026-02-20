@@ -1,0 +1,100 @@
+{% load static %}
+{% load portfolio_tags %}
+
+<footer class="footer bg-dark text-white pt-5 pb-4">
+    <div class="container">
+        <div class="row text-md-left">
+            <!-- About Column -->
+            <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Ajagare Rahul</h5>
+                <p class="text-white-50">
+                    Professional Python & Django Developer with expertise in building modern, scalable web applications.
+                </p>
+                <div class="mt-3">
+                    {% if social_links %}
+                        {% for link in social_links %}
+                            <a href="{{ link.url }}" target="_blank" class="btn btn-outline-light btn-sm rounded-circle me-2">
+                                <i class="{% get_social_icon link.platform %}"></i>
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <a href="https://github.com" target="_blank" class="btn btn-outline-light btn-sm rounded-circle me-2">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" class="btn btn-outline-light btn-sm rounded-circle me-2">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="btn btn-outline-light btn-sm rounded-circle me-2">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Quick Links -->
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Quick Links</h5>
+                <p>
+                    <a href="{% url 'portfolio:home' %}" class="text-white" style="text-decoration: none;">Home</a>
+                </p>
+                <p>
+                    <a href="{% url 'portfolio:about' %}" class="text-white" style="text-decoration: none;">About</a>
+                </p>
+                <p>
+                    <a href="{% url 'portfolio:projects' %}" class="text-white" style="text-decoration: none;">Projects</a>
+                </p>
+                <p>
+                    <a href="{% url 'portfolio:skills' %}" class="text-white" style="text-decoration: none;">Skills</a>
+                </p>
+            </div>
+            
+            <!-- Services -->
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Services</h5>
+                <p>
+                    <a href="{% url 'portfolio:services' %}" class="text-white" style="text-decoration: none;">Web Development</a>
+                </p>
+                <p>
+                    <a href="{% url 'portfolio:services' %}" class="text-white" style="text-decoration: none;">Django Development</a>
+                </p>
+                <p>
+                    <a href="{% url 'portfolio:services' %}" class="text-white" style="text-decoration: none;">API Development</a>
+                </p>
+                <p>
+                    <a href="{% url 'portfolio:services' %}" class="text-white" style="text-decoration: none;">Consulting</a>
+                </p>
+            </div>
+            
+            <!-- Contact -->
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact</h5>
+                <p class="text-white">
+                    <i class="fas fa-envelope me-2"></i> ajagare.rahul@example.com
+                </p>
+                <p class="text-white">
+                    <i class="fas fa-phone me-2"></i> +91 XXXXXXXXXX
+                </p>
+                <p class="text-white">
+                    <i class="fas fa-map-marker-alt me-2"></i> India
+                </p>
+            </div>
+        </div>
+        
+        <div class="row align-items-center mt-4">
+            <div class="col-md-7 col-lg-8">
+                <p class="text-white-50">
+                    Copyright © {% get_current_year %} <a href="{% url 'portfolio:home' %}" style="text-decoration: none;">
+                        <strong>Ajagare Rahul</strong>
+                    </a>. All rights reserved.
+                </p>
+            </div>
+            <div class="col-md-5 col-lg-4">
+                <div class="text-center text-md-right">
+                    <p class="text-white-50">
+                        <i class="fas fa-users me-1"></i> Total Visitors: <span class="text-warning">{{ visitor_count }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

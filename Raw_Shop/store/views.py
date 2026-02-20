@@ -13,7 +13,8 @@ def register_page(request):
         form=SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            UserProfile.objects.create(user=user)
+            # Use get_or_create to avoid UNIQUE constraint error
+            UserProfile.objects.get_or_create(user=user)
             # Auto-login after registration
             login(request, user)
             messages.success(request, 'Welcome! Your account has been created.')
@@ -246,8 +247,16 @@ def dashboard(request):
     wishlist_count = 0
     addresses_count = 0
     
+    # Get cart items count
+    try:
+        cart = Cart.objects.get(user=request.user)
+        cart_items_count = CartItem.objects.filter(cart=cart).count()
+    except Cart.DoesNotExist:
+        cart_items_count = 0
+    
     return render(request, 'dashboard.html', {
         'orders_count': orders_count,
         'wishlist_count': wishlist_count,
-        'addresses_count': addresses_count
+        'addresses_count': addresses_count,
+        'cart_items_count': cart_items_count
     })
