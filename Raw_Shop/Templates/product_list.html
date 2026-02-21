@@ -42,11 +42,15 @@
         </a>
         <a href="{% url 'cart_detail' %}" class="quick-action-item">
             <i class="fas fa-shopping-cart"></i>
-            <span>View Cart</span>
+            <span>Cart</span>
+        </a>
+        <a href="{% url 'view_wishlist' %}" class="quick-action-item">
+            <i class="fas fa-heart"></i>
+            <span>Wishlist</span>
         </a>
         <a href="{% url 'my_orders' %}" class="quick-action-item">
             <i class="fas fa-clipboard-list"></i>
-            <span>My Orders</span>
+            <span>Orders</span>
         </a>
         <a href="{% url 'profile' %}" class="quick-action-item">
             <i class="fas fa-user-cog"></i>
@@ -108,14 +112,29 @@
                     </p>
                 </div>
                 <p class="description">{{ product.description|truncatewords:20 }}</p>
-                <div class="card-actions">
-                    <a href="{% url 'product_details' product.id %}" class="btn btn-outline">
+                <div class="card-actions" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    <a href="{% url 'product_details' product.id %}" class="btn btn-sm" style="padding: 6px 12px; font-size: 12px;">
                         <i class="fas fa-eye"></i> Details
                     </a>
                     {% if product.stock > 0 %}
-                    <a href="{% url 'add_to_cart' product.id %}" class="btn">
-                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn btn-sm" style="padding: 6px 12px; font-size: 12px;">
+                        <i class="fas fa-cart-plus"></i> Add
                     </a>
+                    <a href="{% url 'buy_now' product.id %}" class="btn btn-primary btn-sm" style="padding: 6px 12px; font-size: 12px;">
+                        <i class="fas fa-bolt"></i> Buy
+                    </a>
+                    <a href="{% url 'add_to_wishlist' product.id %}" class="btn btn-sm" style="padding: 6px 10px; font-size: 12px;" title="Add to Wishlist">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'login' %}?next={% url 'buy_now' product.id %}" class="btn btn-primary btn-sm" style="padding: 6px 12px; font-size: 12px;">
+                        <i class="fas fa-bolt"></i> Buy
+                    </a>
+                    <a href="{% url 'login' %}?next={% url 'product_details' product.id %}" class="btn btn-sm" style="padding: 6px 12px; font-size: 12px;">
+                        <i class="fas fa-cart-plus"></i> Add
+                    </a>
+                    {% endif %}
                     {% endif %}
                 </div>
             </div>

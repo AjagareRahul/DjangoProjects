@@ -23,6 +23,14 @@ urlpatterns = [
     path("order-success/<int:order_id>/", order_success, name="order_success"),
     path("my-orders/", my_orders, name="my_orders"),
     
+    # Buy Now - Direct checkout
+    path("buy-now/<int:product_id>/", buy_now, name="buy_now"),
+    
+    # Wishlist
+    path("wishlist/", view_wishlist, name="view_wishlist"),
+    path("add-to-wishlist/<int:product_id>/", add_to_wishlist, name="add_to_wishlist"),
+    path("remove-from-wishlist/<int:product_id>/", remove_from_wishlist, name="remove_from_wishlist"),
+    
     # Profile
     path("profile/", profile_view, name="profile"),
     path("dashboard/", dashboard, name="dashboard"),

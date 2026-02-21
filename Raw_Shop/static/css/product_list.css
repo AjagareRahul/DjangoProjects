@@ -329,3 +329,34 @@
         font-size: 1.125rem;
     }
 }
+
+/* Small Button Styles for Product Cards */
+.card-actions .btn-sm {
+    padding: 6px 12px;
+    font-size: 11px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-start;
+}
+
+/* Responsive Card Actions */
+@media (max-width: 480px) {
+    .card-actions {
+        gap: 4px;
+    }
+    
+    .card-actions .btn-sm {
+        padding: 5px 8px;
+        font-size: 10px;
+    }
+    
+    .card-actions .btn-sm i {
+        margin-right: 3px;
+    }
+}

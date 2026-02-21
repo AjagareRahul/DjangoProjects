@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Wishlist - Raw Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <a href="{% url 'dashboard' %}" class="back-link">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+    <div class="page-header">
+        <h1>❤️ My Wishlist</h1>
+        <p>Products you've saved for later</p>
+    </div>
+
+    {% if wishlist_items %}
+    <div class="product-grid">
+        {% for item in wishlist_items %}
+        <div class="product-card">
+            <div class="product-image-wrapper">
+                {% if item.product.image %}
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                {% else %}
+                <div style="width:100%;height:200px;background:#B8E3E9;display:flex;align-items:center;justify-content:center;">
+                    <i class="fas fa-image" style="font-size:3rem;color:#93B1B5;"></i>
+                </div>
+                {% endif %}
+                {% if item.product.stock == 0 %}
+                <span class="product-badge badge-out-of-stock">Out of Stock</span>
+                {% elif item.product.stock <= 5 %}
+                <span class="product-badge badge-low-stock">Low Stock</span>
+                {% else %}
+                <span class="product-badge badge-in-stock">In Stock</span>
+                {% endif %}
+            </div>
+            <div class="product-card-content">
+                <h3>
+                    <a href="{% url 'product_details' item.product.id %}">{{ item.product.name }}</a>
+                </h3>
+                <div class="product-price-row">
+                    <p class="price"><span class="currency">₹</span>{{ item.product.price }}</p>
+                    <p class="stock {% if item.product.stock == 0 %}out-of-stock{% elif item.product.stock <= 5 %}low-stock{% else %}in-stock{% endif %}">
+                        {% if item.product.stock > 0 %}<i class="fas fa-check-circle"></i> {{ item.product.stock }} available{% else %}<i class="fas fa-times-circle"></i> Out of Stock{% endif %}
+                    </p>
+                </div>
+                <p class="description">{{ item.product.description|truncatewords:20 }}</p>
+                <div class="card-actions" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    <a href="{% url 'product_details' item.product.id %}" class="btn btn-sm" style="padding: 6px 12px; font-size: 12px;">
+                        <i class="fas fa-eye"></i> Details
+                    </a>
+                    {% if item.product.stock > 0 %}
+                    <a href="{% url 'buy_now' item.product.id %}" class="btn btn-primary btn-sm" style="padding: 6px 12px; font-size: 12px;">
+                        <i class="fas fa-bolt"></i> Buy
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'remove_from_wishlist' item.product.id %}" class="btn btn-sm" style="padding: 6px 10px; font-size: 12px; color: #e74c3c; border-color: #e74c3c;">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="fas fa-heart"></i>
+        <h3>Your Wishlist is Empty</h3>
+        <p>Browse our products and add items you like to your wishlist</p>
+        <a href="{% url 'product_list' %}" class="btn">Browse Products</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

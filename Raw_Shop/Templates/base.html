@@ -34,6 +34,12 @@
                     <i class="fas fa-home"></i>
                     <span>Home</span>
                 </a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'view_wishlist' %}" class="nav-link">
+                    <i class="fas fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+                {% endif %}
                 <a href="{% url 'cart_detail' %}" class="nav-link">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Cart</span>
@@ -76,6 +82,11 @@
         <a href="{% url 'product_list' %}" class="mobile-link">
             <i class="fas fa-home"></i> Home
         </a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'view_wishlist' %}" class="mobile-link">
+            <i class="fas fa-heart"></i> Wishlist
+        </a>
+        {% endif %}
         <a href="{% url 'cart_detail' %}" class="mobile-link">
             <i class="fas fa-shopping-cart"></i> Cart
         </a>
@@ -118,7 +129,7 @@
             </div>
             <div class="footer-section">
                 <h4>Contact</h4>
-                <p><i class="fas fa-envelope"></i> support@rawshop.com</p>
+                <p><i class="fas fa-envelope"></i> ajagarerahul@gmail.com</p>
                 <p><i class="fas fa-phone"></i> +91 1234567890</p>
             </div>
             <div class="footer-section">

@@ -28,7 +28,7 @@
                     {% endfor %}
                 {% endif %}
                 
-                <form method="POST" class="signup-form">
+                <form method="POST" action="{% url 'sing_up' %}" class="signup-form">
                     {% csrf_token %}
                     
                     <div class="form-group">
