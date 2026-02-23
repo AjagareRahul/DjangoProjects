@@ -1,0 +1,22 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}My Website{% endblock %}</title>
+</head>
+<body>
+
+    <!-- include navbar -->
+    {% include "navbar.html" %}
+
+    <hr>
+
+    <!-- main content area -->
+    {% block content %}
+    {% endblock %}
+
+    <hr>
+    <footer>© 2026</footer>
+
+</body>
+</html>
