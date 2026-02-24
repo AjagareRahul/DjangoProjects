@@ -5,11 +5,68 @@
 {% block title %}Projects - Ajagare Rahul{% endblock %}
 {% block meta_description %}View my portfolio of web development projects built with Python, Django, and modern technologies.{% endblock %}
 
+{% block extra_css %}
+<style>
+    .project-card {
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .project-card:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    }
+    
+    .project-card .card-img-top {
+        height: 220px;
+        object-fit: cover;
+        transition: all 0.5s ease;
+    }
+    
+    .project-card:hover .card-img-top {
+        transform: scale(1.1);
+    }
+    
+    .project-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    .project-card .card-title {
+        font-weight: 700;
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .project-card .card-text {
+        color: var(--text-light);
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    .skill-tag {
+        display: inline-block;
+        padding: 0.4rem 0.8rem;
+        background: var(--bg-light);
+        border-radius: 20px;
+        margin: 0.2rem;
+        font-size: 0.8rem;
+        transition: var(--transition);
+    }
+    
+    .skill-tag:hover {
+        background: var(--primary-color);
+        color: var(--text-dark);
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <!-- Page Header -->
 <section class="page-header bg-dark text-white py-5">
     <div class="container py-5">
-        <h1 class="display-4" data-aos="fade-up">My Projects</h1>
+        <h1 class="display-4 fw-bold" data-aos="fade-up">My Projects</h1>
+        <p class="lead text-white-50" data-aos="fade-up" data-aos-delay="100">Showcasing my work in web development</p>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'portfolio:home' %}" class="text-white">Home</a></li>
@@ -28,27 +85,29 @@
                 <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
                     <div class="card project-card h-100 border-0 shadow-sm">
                         {% if project.image %}
-                        <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+                        <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
                         {% else %}
-                        <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 220px;">
                             <i class="fas fa-project-diagram fa-4x text-white"></i>
                         </div>
                         {% endif %}
                         <div class="card-body">
                             {% if project.featured %}
-                            <span class="badge bg-warning text-dark mb-2">Featured</span>
+                            <span class="badge bg-warning text-dark mb-2">
+                                <i class="fas fa-star me-1"></i> Featured
+                            </span>
                             {% endif %}
                             <h5 class="card-title">{{ project.title }}</h5>
                             <p class="card-text text-muted">{{ project.short_description }}</p>
                             <div class="mb-3">
                                 {{ project.technology_used|format_technology|safe }}
                             </div>
-                            <div class="d-flex gap-2">
-                                <a href="{% url 'portfolio:project_detail' project.slug %}" class="btn btn-sm btn-primary">
+                            <div class="d-flex flex-wrap gap-2">
+                                <a href="{% url 'portfolio:project_detail' project.slug %}" class="btn btn-sm btn-warning">
                                     <i class="fas fa-eye me-1"></i> View
                                 </a>
                                 {% if project.project_url %}
-                                <a href="{{ project.project_url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                <a href="{{ project.project_url }}" target="_blank" class="btn btn-sm btn-outline-dark">
                                     <i class="fas fa-external-link-alt me-1"></i> Live
                                 </a>
                                 {% endif %}
@@ -60,7 +119,9 @@
                             </div>
                         </div>
                         <div class="card-footer bg-transparent">
-                            <small class="text-muted">{{ project.created_at|time_ago }}</small>
+                            <small class="text-muted">
+                                <i class="fas fa-calendar-alt me-1"></i> {{ project.created_at|time_ago }}
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -108,11 +169,11 @@
 </section>
 
 <!-- Call to Action -->
-<section class="py-5 bg-warning">
-    <div class="container py-4 text-center">
-        <h2 class="text-dark mb-3">Have a Project in Mind?</h2>
-        <p class="text-dark mb-4">Let's discuss how I can help bring your ideas to life.</p>
-        <a href="{% url 'portfolio:contact' %}" class="btn btn-dark btn-lg">
+<section class="cta-section py-5">
+    <div class="container py-5 text-center">
+        <h2 class="text-dark mb-3 fw-bold" data-aos="fade-up">Have a Project in Mind?</h2>
+        <p class="text-dark mb-4" data-aos="fade-up" data-aos-delay="100">Let's discuss how I can help bring your ideas to life.</p>
+        <a href="{% url 'portfolio:contact' %}" class="btn btn-dark btn-lg" data-aos="fade-up" data-aos-delay="200">
             <i class="fas fa-envelope me-2"></i>Get In Touch
         </a>
     </div>

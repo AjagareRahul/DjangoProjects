@@ -1,7 +1,7 @@
 {% load static %}
 {% load portfolio_tags %}
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNavbar">
     <div class="container">
         <a class="navbar-brand" href="{% url 'portfolio:home' %}">
             <span class="brand-text">Ajagare Rahul</span>
@@ -12,44 +12,107 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'portfolio:home' %}">Home</a>
+                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'portfolio:home' %}">
+                        <i class="fas fa-home me-1 d-lg-none"></i> Home
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if '/about/' in request.path %}active{% endif %}" href="{% url 'portfolio:about' %}">About</a>
+                    <a class="nav-link {% if '/about/' in request.path %}active{% endif %}" href="{% url 'portfolio:about' %}">
+                        <i class="fas fa-user me-1 d-lg-none"></i> About
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if '/projects/' in request.path %}active{% endif %}" href="{% url 'portfolio:projects' %}">Projects</a>
+                    <a class="nav-link {% if '/projects/' in request.path %}active{% endif %}" href="{% url 'portfolio:projects' %}">
+                        <i class="fas fa-briefcase me-1 d-lg-none"></i> Projects
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if '/skills/' in request.path %}active{% endif %}" href="{% url 'portfolio:skills' %}">Skills</a>
+                    <a class="nav-link {% if '/skills/' in request.path %}active{% endif %}" href="{% url 'portfolio:skills' %}">
+                        <i class="fas fa-code me-1 d-lg-none"></i> Skills
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if '/services/' in request.path %}active{% endif %}" href="{% url 'portfolio:services' %}">Services</a>
+                    <a class="nav-link {% if '/services/' in request.path %}active{% endif %}" href="{% url 'portfolio:services' %}">
+                        <i class="fas fa-cogs me-1 d-lg-none"></i> Services
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if '/blog/' in request.path %}active{% endif %}" href="{% url 'portfolio:blog' %}">Blog</a>
+                    <a class="nav-link {% if '/blog/' in request.path %}active{% endif %}" href="{% url 'portfolio:blog' %}">
+                        <i class="fas fa-blog me-1 d-lg-none"></i> Blog
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if '/contact/' in request.path %}active{% endif %}" href="{% url 'portfolio:contact' %}">Contact</a>
+                    <a class="nav-link {% if '/contact/' in request.path %}active{% endif %}" href="{% url 'portfolio:contact' %}">
+                        <i class="fas fa-envelope me-1 d-lg-none"></i> Contact
+                    </a>
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user-circle"></i> {{ user.username }}
+                        <i class="fas fa-user-circle me-1"></i> {{ user.username }}
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item" href="{% url 'portfolio:dashboard' %}">Dashboard</a></li>
-                        <li><a class="dropdown-item" href="{% url 'portfolio:profile' %}">Profile</a></li>
+                    <ul class="dropdown-menu dropdown-menu-end animate-dropdown" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="{% url 'portfolio:dashboard' %}"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
+                        <li><a class="dropdown-item" href="{% url 'portfolio:profile' %}"><i class="fas fa-user me-2"></i>Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'portfolio:logout' %}">Logout</a></li>
+                        <li><a class="dropdown-item" href="{% url 'portfolio:logout' %}"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                     </ul>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link btn btn-primary btn-sm px-3" href="{% url 'portfolio:login' %}">Login</a>
+                    <a class="nav-link btn-nav-login" href="{% url 'portfolio:login' %}">
+                        <i class="fas fa-sign-in-alt me-1"></i> Login
+                    </a>
                 </li>
                 {% endif %}
             </ul>
         </div>
     </div>
 </nav>
+
+<style>
+    .btn-nav-login {
+        background: linear-gradient(135deg, var(--primary-color), #ffdb4d);
+        color: var(--text-dark) !important;
+        padding: 0.5rem 1.5rem !important;
+        border-radius: 50px;
+        font-weight: 600;
+        margin-left: 0.5rem;
+        transition: var(--transition);
+    }
+    
+    .btn-nav-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+    }
+    
+    .animate-dropdown {
+        animation: slideDown 0.3s ease-out;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        padding: 0.5rem;
+    }
+    
+    .animate-dropdown .dropdown-item {
+        border-radius: 8px;
+        padding: 0.6rem 1rem;
+        transition: var(--transition);
+    }
+    
+    .animate-dropdown .dropdown-item:hover {
+        background: var(--primary-color);
+        color: var(--text-dark);
+    }
+    
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

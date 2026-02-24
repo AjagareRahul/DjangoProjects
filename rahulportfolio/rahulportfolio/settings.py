@@ -1,5 +1,6 @@
 """
 Django settings for rahulportfolio project.
+Production-ready configuration for Render deployment.
 """
 
 import os
@@ -9,12 +10,20 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-rahul-portfolio-dev-key-2024-ajagare-rahul'
+# Load SECRET_KEY from environment variable
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-dev-key-change-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS - Configure for Render deployment
+# Get from environment variable or use Render's default domain
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS = [RENDER_EXTERNAL_HOSTNAME, 'localhost', '127.0.0.1']
+else:
+    # Fallback for local development - add your custom domains here
+    ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 # Application definition
 
@@ -32,6 +41,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # For static file serving
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -70,15 +80,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'rahulportfolio.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+# Database configuration for production
+# Uses SQLite by default, but can be configured for PostgreSQL on Render
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# For PostgreSQL on Render, uncomment and configure below:
+# import dj_database_url
+# DATABASES = {
+#     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -118,6 +133,9 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+# WhiteNoise configuration for serving static files in production
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -134,3 +152,28 @@ LOGOUT_REDIRECT_URL = 'portfolio:home'
 # Session settings
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 7  # 1 week
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# =============================================================================
+# SECURITY SETTINGS FOR PRODUCTION (Required by check --deploy)
+# =============================================================================
+
+# Force HTTPS/SSL - Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = os.environ.get('SECRET_SSL_REDIRECT', 'True').lower() in ('true', '1', 'yes')
+
+# HSTS (HTTP Strict Transport Security) - Forces browsers to use HTTPS
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Secure cookies - Only send cookies over HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# Prevent content type sniffing
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Browser's X-Frame-Options for clickjacking protection
+X_FRAME_OPTIONS = 'DENY'
+
+# HTTPS for the entire session (optional - uncomment if needed)
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
