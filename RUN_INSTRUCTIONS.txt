@@ -1,0 +1,52 @@
+# How to Run the Project
+
+## Option 1: Using Global Python (Recommended for quick start)
+
+1. Open CMD
+2. Navigate to the folder:
+   cd d:\djangoprojects\RahulPortfolio
+
+3. Install dependencies:
+   pip install -r requirements.txt
+
+4. Run the server:
+   python manage.py runserver
+
+5. Open browser:
+   http://127.0.0.1:8000/
+
+
+## Option 2: Using Virtual Environment
+
+1. Open CMD
+2. Navigate to the folder:
+   cd d:\djangoprojects\RahulPortfolio
+
+3. Create virtual environment:
+   python -m venv env
+
+4. Activate virtual environment:
+   env\Scripts\activate
+
+5. Install dependencies:
+   pip install -r requirements.txt
+
+6. Run the server:
+   python manage.py runserver
+
+7. Open browser:
+   http://127.0.0.1:8000/
+
+
+## To Stop the Server:
+Press Ctrl + C in CMD
+
+
+## For Deployment (Render):
+1. Upload to GitHub
+2. Connect to Render.com
+3. Set environment variables:
+   - SECRET_KEY = (generate a secure key)
+   - DEBUG = False
+4. Build command: pip install -r requirements.txt
+5. Start command: gunicorn rahulportfolio.wsgi
