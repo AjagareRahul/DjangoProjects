@@ -1,4 +1,4 @@
-# DjangoProjects 🚀
+--> DjangoProjects 
 
 This repository contains all my **Django class projects and practice work**, created while learning the Django framework step by step.
 
@@ -6,7 +6,7 @@ It includes multiple Django projects covering fundamentals to intermediate conce
 
 ---
 
-## 📁 Project Structure
+--> Project Structure
 
 DjangoProjects/
 │
@@ -29,17 +29,17 @@ Each folder represents an **individual Django project** created during classes o
 
 ---
 
-## 🛠️ Technologies Used
+ --> Technologies Used
 
-- Python 🐍
-- Django Framework 🌐
+- Python 
+- Django Framework 
 - HTML, CSS
 - SQLite / MySQL
 - Git & GitHub
 
 ---
 
-## ⚙️ How to Run Any Project Locally
+--> How to Run Any Project Locally
 
 1. Clone the repository:
 
@@ -64,13 +64,13 @@ python manage.py runserver
 7. Open browser:
 http://127.0.0.1:8000/
 
-🎯 Purpose of This Repository
+--> Purpose of This Repository
 Practice Django concepts
 Maintain all class projects in one place
 Track learning progress
 Showcase work for college and interviews
 
-👨‍💻 Author
+--> Author
 
 Rahul Ajagare
 Django Learner | Full Stack Aspirant
