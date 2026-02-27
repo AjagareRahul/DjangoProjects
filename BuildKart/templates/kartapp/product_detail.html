@@ -3,12 +3,16 @@
 {% block title %}{{ product.name }} - BuildKart{% endblock %}
 
 {% block content %}
-<div class="container-fluid px-4 py-4">
+<div class="container-fluid px-3 px-lg-4 py-4">
     <div class="row">
         <!-- Product Image -->
         <div class="col-md-5">
             <div class="kart-card p-4 text-center">
-                <i class="fas fa-box fa-5x text-primary"></i>
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid">
+                {% else %}
+                    <i class="fas fa-box fa-5x text-primary"></i>
+                {% endif %}
             </div>
         </div>
         

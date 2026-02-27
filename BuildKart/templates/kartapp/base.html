@@ -73,6 +73,7 @@
             border: none;
             padding: 0 15px;
             color: var(--primary);
+            cursor: pointer;
         }
         
         .header-search button:hover {
@@ -126,6 +127,7 @@
             list-style: none;
             padding: 0;
             margin: 0;
+            flex-wrap: wrap;
         }
         
         .category-nav li a {
@@ -265,6 +267,9 @@
             font-weight: 500;
             border-radius: 2px;
             transition: background 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
         }
         
         .btn-primary-kart:hover {
@@ -279,6 +284,9 @@
             padding: 10px 20px;
             font-weight: 500;
             border-radius: 2px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
         }
         
         .btn-outline-kart {
@@ -287,6 +295,8 @@
             padding: 8px 16px;
             border-radius: 2px;
             font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
         }
         
         /* Footer */
@@ -329,18 +339,95 @@
         }
         
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
             .header-search {
                 max-width: 100%;
+                margin: 10px 0;
             }
             
             .category-nav ul {
                 overflow-x: auto;
                 white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
             }
             
+            .category-nav li a {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            
+            .header-actions {
+                gap: 15px;
+            }
+            
+            .header-actions a span {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
             .product-image {
                 height: 150px;
+            }
+            
+            .buildkart-header .container {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            
+            .header-actions {
+                gap: 10px;
+            }
+            
+            .cart-badge {
+                padding: 8px;
+            }
+            
+            .footer-section {
+                margin-bottom: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-section h1 {
+                font-size: 1.5rem;
+            }
+            
+            .hero-section p {
+                font-size: 0.9rem;
+            }
+            
+            .product-card {
+                padding: 10px;
+            }
+            
+            .product-title {
+                font-size: 12px;
+            }
+            
+            .current-price {
+                font-size: 16px;
+            }
+            
+            .btn-primary-kart, .btn-secondary-kart {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            
+            .footer-section ul li a {
+                font-size: 12px;
+            }
+        }
+        
+        /* Touch-friendly elements */
+        @media (hover: none) {
+            .btn-primary-kart:active,
+            .btn-secondary-kart:active {
+                transform: scale(0.98);
+            }
+            
+            .product-card:active {
+                transform: scale(0.99);
             }
         }
     </style>
@@ -349,7 +436,7 @@
 <body>
     <!-- Header -->
     <header class="buildkart-header">
-        <div class="container-fluid px-4">
+        <div class="container-fluid px-3 px-lg-4">
             <div class="row align-items-center">
                 <div class="col-auto">
                     <a href="{% url 'home' %}" class="text-white text-decoration-none">
@@ -360,7 +447,7 @@
                 </div>
                 <div class="col">
                     <form action="{% url 'search' %}" method="get" class="header-search d-flex">
-                        <input type="text" name="q" placeholder="Search for products, brands and more" value="{{ request.GET.q|default:'' }}">
+                        <input type="text" name="q" placeholder="Search for products, brands and more" value="{{ request.GET.q|default:'' }}" class="form-control">
                         <button type="submit">
                             <i class="fas fa-search"></i>
                         </button>
@@ -381,10 +468,10 @@
                             </ul>
                         </div>
                         <a href="{% url 'orders' %}" class="d-none d-md-block">
-                            <i class="fas fa-box"></i> Orders
+                            <i class="fas fa-box"></i> <span>Orders</span>
                         </a>
                         <a href="{% url 'wishlist' %}" class="d-none d-md-block">
-                            <i class="far fa-heart"></i> Wishlist
+                            <i class="far fa-heart"></i> <span>Wishlist</span>
                         </a>
                     {% else %}
                         <a href="{% url 'login' %}" class="btn btn-light btn-sm">Login</a>
@@ -403,7 +490,7 @@
     
     <!-- Category Navigation -->
     <nav class="category-nav">
-        <div class="container-fluid px-4">
+        <div class="container-fluid px-3 px-lg-4">
             <ul>
                 <li><a href="{% url 'product_list' %}"><i class="fas fa-th-large"></i> All Products</a></li>
                 {% for category in all_categories|slice:":8" %}
@@ -432,9 +519,9 @@
     
     <!-- Footer -->
     <footer class="buildkart-footer">
-        <div class="container-fluid px-4">
+        <div class="container-fluid px-3 px-lg-4">
             <div class="row">
-                <div class="col-md-2 footer-section">
+                <div class="col-6 col-md-2 footer-section">
                     <h6>ABOUT</h6>
                     <ul>
                         <li><a href="#">Contact Us</a></li>
@@ -443,7 +530,7 @@
                         <li><a href="#">BuildKart Stories</a></li>
                     </ul>
                 </div>
-                <div class="col-md-2 footer-section">
+                <div class="col-6 col-md-2 footer-section">
                     <h6>HELP</h6>
                     <ul>
                         <li><a href="#">Payments</a></li>
@@ -452,7 +539,7 @@
                         <li><a href="#">FAQ</a></li>
                     </ul>
                 </div>
-                <div class="col-md-2 footer-section">
+                <div class="col-6 col-md-2 footer-section">
                     <h6>SOCIAL</h6>
                     <ul>
                         <li><a href="#">Facebook</a></li>
@@ -461,7 +548,7 @@
                         <li><a href="#">Instagram</a></li>
                     </ul>
                 </div>
-                <div class="col-md-3 footer-section">
+                <div class="col-6 col-md-3 footer-section">
                     <h6>MAIL US</h6>
                     <p style="font-size: 13px; color: #fff;">
                         BuildKart Internet Private Limited,<br>
@@ -469,7 +556,7 @@
                         Mumbai, Maharashtra - 400001
                     </p>
                 </div>
-                <div class="col-md-3 footer-section">
+                <div class="col-12 col-md-3 footer-section">
                     <h6>REGISTERED OFFICE ADDRESS</h6>
                     <p style="font-size: 13px; color: #fff;">
                         BuildKart Internet Private Limited,<br>
@@ -479,10 +566,10 @@
                 </div>
             </div>
             <div class="row mt-3 pt-3 border-top" style="border-color: #485460 !important;">
-                <div class="col-md-6">
+                <div class="col-12 col-md-6 text-center text-md-start">
                     <p style="font-size: 13px; margin: 0;">© 2024 BuildKart. All rights reserved.</p>
                 </div>
-                <div class="col-md-6 text-md-end">
+                <div class="col-12 col-md-6 text-center text-md-end mt-2 mt-md-0">
                     <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/payment-method_69e7ec.svg" alt="Payment Methods" style="height: 30px;">
                 </div>
             </div>

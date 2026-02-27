@@ -3,7 +3,7 @@
 {% block title %}My Wishlist - BuildKart{% endblock %}
 
 {% block content %}
-<div class="container-fluid px-4 py-4">
+<div class="container-fluid px-3 px-lg-4 py-4">
     <div class="row">
         <!-- Sidebar -->
         <div class="col-md-3 mb-4">
@@ -48,7 +48,7 @@
                             <a href="{% url 'add_to_cart' item.product.id %}" class="btn btn-warning btn-sm">
                                 <i class="fas fa-shopping-cart me-2"></i> Add to Cart
                             </a>
-                            <a href="{% url 'product_detail' item.product.id %}" class="btn btn-outline-primary btn-sm">
+                            <a href="{% url 'product_detail' item.product.id %}" class="btn btn-outline-secondary btn-sm">
                                 View Details
                             </a>
                         </div>
@@ -57,11 +57,11 @@
                 {% endfor %}
             </div>
             {% else %}
-            <div class="kart-card p-4 text-center">
-                <i class="fas fa-heart fa-3x text-muted mb-3"></i>
+            <div class="text-center py-5">
+                <i class="fas fa-heart fa-4x text-secondary mb-3"></i>
                 <h5>Your Wishlist is Empty</h5>
-                <p class="text-muted">Save items you like to your wishlist</p>
-                <a href="{% url 'product_list' %}" class="btn btn-primary">Browse Products</a>
+                <p class="text-muted">Save items you like to your wishlist.</p>
+                <a href="{% url 'product_list' %}" class="btn btn-primary-kart">Start Shopping</a>
             </div>
             {% endif %}
         </div>
