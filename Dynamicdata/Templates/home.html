@@ -1,0 +1,15 @@
+{%extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="user-info">
+        <h1>User Information</h1>
+        <p><span class="label">Name:</span> <span class="value">{{name}}</span></p>
+        <p><span class="label">Age:</span> <span class="value">{{age}}</span></p>
+        <p><span class="label">City:</span> <span class="value">{{city}}</span></p>
+        <a href="#" class="btn">Learn More</a>
+    </div>
+</div>
+{% endblock %}
+

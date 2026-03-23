@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .recipe-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+        .recipe-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .recipe-content {
+            padding: 20px;
+        }
+        .recipe-name {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .recipe-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        .no-image {
+            width: 100%;
+            height: 250px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>🍽️ My Recipes</h1>
+    <div class="container">
+        {% for i in rec %}
+            <div class="recipe-card">
+                {% if i.image %}
+                    <img src="{{ i.image.url }}" alt="{{ i.name }}" class="recipe-image">
+                {% else %}
+                    <div class="no-image">Image is not available</div>
+                {% endif %}
+                <div class="recipe-content">
+                    <div class="recipe-name">{{ i.name }}</div>
+                    <div class="recipe-description">{{ i.description }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
