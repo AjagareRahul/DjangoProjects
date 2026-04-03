@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <h1 class="mb-4">Blog</h1>
+
+        <div class="row">
+            <div class="col-md-8">
+                <h3>All Posts</h3>
+                {% for post in posts %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h4>{{ post.title }}</h4>
+                        <span class="badge bg-secondary">{{ post.category.name }}</span>
+                        <p class="mt-2">{{ post.content }}</p>
+                        <small class="text-muted">By {{ post.user.username }} on {{ post.created_at|date:"M d, Y" }}</small>
+                        <div class="mt-2">
+                            <a href="{% url 'edit_post' post.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                            <a href="{% url 'delete_post' post.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </div>
+
+                        <hr>
+                        <h6>Comments</h6>
+                        {% for comment in post.comment_set.all %}
+                        <div class="bg-light p-2 mb-2 rounded d-flex justify-content-between align-items-start">
+                            <span>{{ comment.text }}</span>
+                            <span>
+                                <a href="{% url 'edit_comment' comment.pk %}" class="btn btn-sm btn-outline-primary py-0 px-1">Edit</a>
+                                <a href="{% url 'delete_comment' comment.pk %}" class="btn btn-sm btn-outline-danger py-0 px-1">Delete</a>
+                            </span>
+                        </div>
+                        {% endfor %}
+
+                        <form method="post" class="mt-2">
+                            {% csrf_token %}
+                            <input type="hidden" name="form_type" value="comment">
+                            <input type="hidden" name="post_id" value="{{ post.id }}">
+                            {% for field in comment_form %}
+                            <div class="mb-2">
+                                <label class="form-label">{{ field.label }}</label>
+                                {{ field.as_widget }}
+                            </div>
+                            {% endfor %}
+                            <button type="submit" class="btn btn-sm btn-outline-primary">Add Comment</button>
+                        </form>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No posts yet.</p>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-header">Add New Post</div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="form_type" value="post">
+                            {% for field in post_form %}
+                            <div class="mb-3">
+                                <label class="form-label">{{ field.label }}</label>
+                                {{ field.as_widget }}
+                                {% if field.errors %}
+                                <div class="text-danger">{{ field.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                            <button type="submit" class="btn btn-primary">Add Post</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">Add New Category</div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="form_type" value="category">
+                            {% for field in category_form %}
+                            <div class="mb-3">
+                                <label class="form-label">{{ field.label }}</label>
+                                {{ field.as_widget }}
+                                {% if field.errors %}
+                                <div class="text-danger">{{ field.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                            <button type="submit" class="btn btn-success">Add Category</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Categories</div>
+                    <ul class="list-group list-group-flush">
+                        {% for cat in categories %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ cat.name }}
+                            <span>
+                                <a href="{% url 'edit_category' cat.pk %}" class="btn btn-sm btn-outline-primary py-0 px-1">Edit</a>
+                                <a href="{% url 'delete_category' cat.pk %}" class="btn btn-sm btn-outline-danger py-0 px-1">Delete</a>
+                            </span>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item text-muted">No categories yet.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
