@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home</title>
+</head>
+<body>
+    <h2>Employee List</h2>
+    {% if Employee %}
+    <ul>
+        {% for emp in Employee %}
+        <li>
+        
+        <h4>Name: {{ emp.name }} Salary: {{ emp.salary }} City: {{ emp.city }}</h4>
+
+         <a href="/edit/{{ emp.id }}/">Edit</a>
+            <a href="/delete/{{ emp.id }}/">Delete</a>
+    </li>
+   
+    {% endfor %}
+</ul>
+ {% else %} 
+<p>Employee Not Found</p>
+{% endif %}
+
+</body>
+</html>
